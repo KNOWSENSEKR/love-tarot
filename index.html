@@ -9,10 +9,21 @@
         @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;700&display=swap');
         body { font-family: 'Pretendard', sans-serif; }
         .tarot-card {
-            height: 280px;
-            border-radius: 20px;
+            height: 320px;
+            border-radius: 18px;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            position: relative;
+        }
+        .card-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 20px 12px 16px;
+            color: white;
+            text-align: center;
         }
     </style>
 </head>
@@ -22,9 +33,9 @@
         <p class="text-purple-300 text-lg mb-12">3장으로 보는 당신의 연애 이야기</p>
 
         <div class="grid grid-cols-3 gap-6 mb-14" id="cards">
-            <div id="card1" class="tarot-card bg-white/10 backdrop-blur-md"></div>
-            <div id="card2" class="tarot-card bg-white/10 backdrop-blur-md"></div>
-            <div id="card3" class="tarot-card bg-white/10 backdrop-blur-md"></div>
+            <div id="card1" class="tarot-card"></div>
+            <div id="card2" class="tarot-card"></div>
+            <div id="card3" class="tarot-card"></div>
         </div>
 
         <button onclick="drawCards()" 
@@ -39,48 +50,45 @@
     </div>
 
     <script>
+        // 주인님이 준 4개 이미지 사용 (반복해서 사용)
         const deck = [
-            { name: "연인", desc: "강렬한 끌림과 선택", img: "https://picsum.photos/id/1015/600/800" },
-            { name: "여황제", desc: "풍요롭고 따뜻한 사랑", img: "https://picsum.photos/id/1027/600/800" },
-            { name: "여사제", desc: "내면의 지혜와 직관", img: "https://picsum.photos/id/1012/600/800" },
-            { name: "태양", desc: "밝고 따뜻한 행복", img: "https://picsum.photos/id/133/600/800" },
-            { name: "별", desc: "희망과 치유", img: "https://picsum.photos/id/201/600/800" },
-            { name: "달", desc: "불안과 착각", img: "https://picsum.photos/id/160/600/800" },
-            { name: "죽음", desc: "관계의 큰 전환", img: "https://picsum.photos/id/106/600/800" },
-            { name: "절제", desc: "균형과 조화", img: "https://picsum.photos/id/133/600/800" }
+            { name: "연인",   desc: "강렬한 끌림과 선택",       img: "https://files.grok.x.ai/.../7zHX2.jpg" },   // 첫 번째 이미지
+            { name: "여황제", desc: "풍요롭고 따뜻한 사랑",     img: "https://files.grok.x.ai/.../ik3Eo.jpg" },   // 두 번째 이미지
+            { name: "여사제", desc: "내면의 지혜와 직관",       img: "https://files.grok.x.ai/.../Z1hkh.jpg" },   // 세 번째 이미지
+            { name: "태양",   desc: "밝고 따뜻한 행복",         img: "https://files.grok.x.ai/.../3hZ20.jpg" }    // 네 번째 이미지
         ];
 
-        // 30개의 순차적 해석 문구 (버튼 누를 때마다 순서대로 순환)
         let currentIndex = 0;
+
         const finalMessages = [
             "당신은 혼자여도 충분히 빛나는 사람입니다. 진짜 사랑은 당신을 더 자유롭고 당당하게 만들어줄 거예요.",
-            "자신을 사랑하는 마음이 강해질수록 좋은 인연이 다가올 거예요. 오늘도 당신을 응원합니다.",
-            "과거의 상처를 잘 치유하고 있다면, 이제 더 건강하고 따뜻한 사랑이 찾아올 때입니다.",
+            "자신을 사랑하는 마음이 강해질수록 좋은 인연이 다가올 거예요.",
+            "과거의 상처를 잘 치유하고 있다면, 이제 더 건강한 사랑이 찾아올 때입니다.",
             "당신의 마음이 자유로워지면 진짜 사랑이 자연스럽게 들어올 거예요.",
             "혼자 있는 시간이 소중해요. 그 시간이 당신을 더 아름답게 만들어줄 거예요.",
             "당신은 사랑받을 자격이 충분한 사람입니다. 자신을 믿고 기다려보세요.",
-            "진짜 사랑은 당신을 더 강하고 행복하게 만들어줄 거예요. 포기하지 마세요.",
+            "진짜 사랑은 당신을 더 강하고 행복하게 만들어줄 거예요.",
             "현재 당신의 에너지는 매우 밝아요. 좋은 변화가 곧 찾아올 겁니다.",
             "당신은 이미 충분히 매력적인 사람이에요. 자신감을 가져도 좋아요.",
-            "건강한 연애는 자신을 사랑하는 마음에서 시작됩니다. 그 마음을 잊지 마세요.",
+            "건강한 연애는 자신을 사랑하는 마음에서 시작됩니다.",
             "미래에는 서로를 존중하고 응원하는 따뜻한 관계가 기다리고 있어요.",
-            "당신의 행복은 결국 당신 스스로가 선택하는 거예요. 용기 내세요.",
+            "당신의 행복은 결국 당신 스스로가 선택하는 거예요.",
             "과거의 교훈을 잘 새기면, 이번에는 더 나은 사랑을 만날 수 있을 거예요.",
-            "당신은 강하고 아름다운 사람입니다. 그 사실을 잊지 마세요.",
-            "진짜 사랑은 당신을 자유롭게 만들어줄 거예요. 기대해도 좋아요.",
-            "자신을 먼저 돌보는 시간이 필요해요. 그 후에 좋은 인연이 올 거예요.",
+            "당신은 강하고 아름다운 사람입니다.",
+            "진짜 사랑은 당신을 자유롭게 만들어줄 거예요.",
+            "자신을 먼저 돌보는 시간이 필요해요.",
             "당신은 사랑을 받을 뿐만 아니라, 사랑을 줄 수 있는 멋진 사람이에요.",
             "이번에는 과거의 패턴을 반복하지 않고 새로운 사랑을 시작할 수 있을 거예요.",
             "당신의 마음이 안정되면 정말 좋은 사람이 다가올 가능성이 커요.",
             "혼자여도 빛나는 당신이니까, 서두르지 않아도 괜찮아요.",
             "건강하고 균형 잡힌 사랑이 곧 당신에게 찾아올 거예요.",
-            "당신은 이미 준비가 되어 있는 사람입니다. 좋은 타이밍을 기다려보세요.",
+            "당신은 이미 준비가 되어 있는 사람입니다.",
             "진짜 사랑은 당신을 더 당당하고 행복하게 만들어줄 것입니다.",
             "자신을 사랑하는 마음이 가장 중요한 열쇠예요.",
             "미래에는 서로를 성장시켜주는 따뜻한 관계가 펼쳐질 거예요.",
-            "당신은 충분히 사랑받을 가치가 있는 사람입니다. 그걸 믿으세요.",
+            "당신은 충분히 사랑받을 가치가 있는 사람입니다.",
             "과거를 잘 정리하면 더 밝은 연애운이 열릴 거예요.",
-            "당신의 행복은 당신 손에 있어요. 긍정적으로 생각해보세요.",
+            "당신의 행복은 당신 손에 있어요.",
             "진짜 사랑은 당신을 더 자유롭게 만들어줄 거예요.",
             "당신은 혼자여도 충분히 멋진 사람이에요. 자신을 아껴주세요."
         ];
@@ -93,11 +101,10 @@
             const c2 = shuffled[1];
             const c3 = shuffled[2];
 
-            document.getElementById('card1').innerHTML = `<img src="${c1.img}" class="w-full h-full object-cover"><div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 p-6"><p class="text-white font-bold text-2xl">${c1.name}</p><p class="text-purple-200">${c1.desc}</p></div>`;
-            document.getElementById('card2').innerHTML = `<img src="${c2.img}" class="w-full h-full object-cover"><div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 p-6"><p class="text-white font-bold text-2xl">${c2.name}</p><p class="text-purple-200">${c2.desc}</p></div>`;
-            document.getElementById('card3').innerHTML = `<img src="${c3.img}" class="w-full h-full object-cover"><div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 p-6"><p class="text-white font-bold text-2xl">${c3.name}</p><p class="text-purple-200">${c3.desc}</p></div>`;
+            document.getElementById('card1').innerHTML = `<img src="${c1.img}" class="w-full h-full object-cover"><div class="card-label"><p class="font-bold text-2xl">${c1.name}</p><p class="text-sm">${c1.desc}</p></div>`;
+            document.getElementById('card2').innerHTML = `<img src="${c2.img}" class="w-full h-full object-cover"><div class="card-label"><p class="font-bold text-2xl">${c2.name}</p><p class="text-sm">${c2.desc}</p></div>`;
+            document.getElementById('card3').innerHTML = `<img src="${c3.img}" class="w-full h-full object-cover"><div class="card-label"><p class="font-bold text-2xl">${c3.name}</p><p class="text-sm">${c3.desc}</p></div>`;
 
-            // 30개 문구 순차적으로 순환
             const message = finalMessages[currentIndex];
             currentIndex = (currentIndex + 1) % finalMessages.length;
 
