@@ -20,7 +20,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
             padding: 20px 12px 16px;
             color: white;
             text-align: center;
@@ -50,12 +50,28 @@
     </div>
 
     <script>
-        // 주인님이 준 4개 이미지 사용 (반복해서 사용)
+        // 주인님이 올린 실제 이미지 4개 사용
         const deck = [
-            { name: "연인",   desc: "강렬한 끌림과 선택",       img: "https://files.grok.x.ai/.../7zHX2.jpg" },   // 첫 번째 이미지
-            { name: "여황제", desc: "풍요롭고 따뜻한 사랑",     img: "https://files.grok.x.ai/.../ik3Eo.jpg" },   // 두 번째 이미지
-            { name: "여사제", desc: "내면의 지혜와 직관",       img: "https://files.grok.x.ai/.../Z1hkh.jpg" },   // 세 번째 이미지
-            { name: "태양",   desc: "밝고 따뜻한 행복",         img: "https://files.grok.x.ai/.../3hZ20.jpg" }    // 네 번째 이미지
+            { 
+                name: "연인", 
+                desc: "강렬한 끌림과 선택", 
+                img: "https://knowsensekr.github.io/love-tarot/402ef5a2-a723-487c-8a74-cff0228bd20f.jpg" 
+            },
+            { 
+                name: "여황제", 
+                desc: "풍요롭고 따뜻한 사랑", 
+                img: "https://knowsensekr.github.io/love-tarot/41698711-c651-4c56-8cb6-523eca1be0c9.jpg" 
+            },
+            { 
+                name: "여사제", 
+                desc: "내면의 지혜와 직관", 
+                img: "https://knowsensekr.github.io/love-tarot/c57042e8-632b-4b11-8bb8-5312747e30dd.jpg" 
+            },
+            { 
+                name: "태양", 
+                desc: "밝고 따뜻한 행복", 
+                img: "https://knowsensekr.github.io/love-tarot/e70d49c9-1bc3-4977-8c2b-8f42e65f83cb.jpg" 
+            }
         ];
 
         let currentIndex = 0;
