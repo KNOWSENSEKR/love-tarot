@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>연애운 타로 | 3장 스프레드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;700&display=swap');
+        body { font-family: 'Pretendard', sans-serif; }
+        .card {
+            transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+        .card.flipped { transform: rotateY(180deg); }
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .card-front {
+            background: linear-gradient(135deg, #7c3aed, #db2777);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        .card-back {
+            background: white;
+            transform: rotateY(180deg);
+            padding: 24px;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-50 to-pink-50 min-h-screen py-12">
+    <div class="max-w-2xl mx-auto px-4">
+        <h1 class="text-4xl font-bold text-center mb-2 text-purple-800">연애운 타로</h1>
+        <p class="text-center text-purple-600 mb-10">3장으로 보는 당신의 연애 이야기</p>
+
+        <div class="grid grid-cols-3 gap-6" id="cards">
+            <div class="card" onclick="flipCard(this)">
+                <div class="card-inner">
+                    <div class="card-front">과거</div>
+                    <div class="card-back" id="past"></div>
+                </div>
+            </div>
+            <div class="card" onclick="flipCard(this)">
+                <div class="card-inner">
+                    <div class="card-front">현재</div>
+                    <div class="card-back" id="present"></div>
+                </div>
+            </div>
+            <div class="card" onclick="flipCard(this)">
+                <div class="card-inner">
+                    <div class="card-front">미래</div>
+                    <div class="card-back" id="future"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-12">
+            <button onclick="drawCards()" 
+                    class="px-12 py-5 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-2xl font-medium text-lg shadow-lg hover:shadow-xl transition-all">
+                타로 카드 뽑기
+            </button>
+        </div>
+
+        <div id="result" class="mt-12 hidden">
+            <div class="bg-white rounded-3xl p-9 shadow-xl">
+                <h3 class="text-2xl font-bold text-center mb-8 text-purple-800">당신의 연애운 해석</h3>
+                <div id="interpretation" class="text-gray-700 leading-relaxed text-[17.2px] space-y-6"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const tarotDeck = [
+            { name: "연인", desc: "강렬한 끌림과 선택의 순간" },
+            { name: "여황제", desc: "풍요롭고 따뜻한 사랑 에너지" },
+            { name: "여사제", desc: "내면의 지혜와 직관" },
+            { name: "마법사", desc: "능동적으로 사랑을 이끌어가는 힘" },
+            { name: "태양", desc: "밝고 따뜻한 행복" },
+            { name: "별", desc: "희망과 치유" },
+            { name: "탑", desc: "갑작스러운 변화" },
+            { name: "달", desc: "불안과 착각" },
+            { name: "죽음", desc: "관계의 큰 전환" },
+            { name: "절제", desc: "균형과 조화" }
+        ];
+
+        function drawCards() {
+            const shuffled = [...tarotDeck].sort(() => Math.random() - 0.5);
+            const past = shuffled[0];
+            const present = shuffled[1];
+            const future = shuffled[2];
+
+            document.getElementById('past').innerHTML = `<p class="text-2xl font-bold text-purple-700">${past.name}</p><p class="mt-4 text-gray-600">${past.desc}</p>`;
+            document.getElementById('present').innerHTML = `<p class="text-2xl font-bold text-purple-700">${present.name}</p><p class="mt-4 text-gray-600">${present.desc}</p>`;
+            document.getElementById('future').innerHTML = `<p class="text-2xl font-bold text-purple-700">${future.name}</p><p class="mt-4 text-gray-600">${future.desc}</p>`;
+
+            const interpretation = `
+                <p><strong>과거:</strong> ${past.desc}의 경험이 아직 당신의 마음속에 남아있습니다. 그때의 아픔과 배움은 지금의 당신을 더 단단하고 현명하게 만들어 주었어요.</p>
+                
+                <p class="mt-6"><strong>현재:</strong> ${present.desc}의 에너지가 강하게 느껴지는 시기입니다. 누군가에게만 의지하지 말고, 자신의 감정을 먼저 존중해주세요. 당신은 이미 충분히 사랑받을 가치가 있는 사람이에요.</p>
+                
+                <p class="mt-6"><strong>미래:</strong> ${future.desc}의 방향으로 흘러갈 가능성이 높습니다. 이번에는 과거의 패턴을 반복하지 않고, 건강하고 균형 잡힌 관계를 만들 수 있을 거예요. 진짜 사랑은 당신을 더 자유롭고 당당하게 만들어줄 것입니다.</p>
+                
+                <p class="mt-8 text-purple-600 font-medium">당신은 혼자여도 빛나는 사람입니다. 건강한 연애는 자신을 사랑하는 마음에서 시작된다는 걸 잊지 마세요.</p>
+            `;
+
+            document.getElementById('interpretation').innerHTML = interpretation;
+            document.getElementById('result').classList.remove('hidden');
+        }
+
+        function flipCard(card) {
+            card.classList.toggle('flipped');
+        }
+    </script>
+</body>
+</html>
