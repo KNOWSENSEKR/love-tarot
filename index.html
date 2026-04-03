@@ -8,46 +8,81 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;700&display=swap');
         body { font-family: 'Pretendard', sans-serif; }
-        .interpretation-box {
-            max-height: 420px;
-            overflow-y: auto;
+        .tarot-card {
+            height: 280px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-purple-950 to-pink-950 min-h-screen py-12">
+<body class="bg-gradient-to-br from-purple-950 via-indigo-950 to-pink-950 min-h-screen py-12">
     <div class="max-w-2xl mx-auto px-4 text-center">
-        <h1 class="text-4xl font-bold text-white mb-2">연애운 타로</h1>
-        <p class="text-purple-300 mb-12">3장으로 보는 당신의 연애 이야기</p>
+        <h1 class="text-5xl font-bold text-white mb-3">연애운 타로</h1>
+        <p class="text-purple-300 text-lg mb-12">3장으로 보는 당신의 연애 이야기</p>
 
-        <!-- 카드 3장 -->
-        <div class="grid grid-cols-3 gap-6 mb-12" id="cards">
-            <div id="card1" class="bg-white/10 backdrop-blur-md rounded-3xl h-72 flex flex-col items-center justify-center text-center p-6"></div>
-            <div id="card2" class="bg-white/10 backdrop-blur-md rounded-3xl h-72 flex flex-col items-center justify-center text-center p-6"></div>
-            <div id="card3" class="bg-white/10 backdrop-blur-md rounded-3xl h-72 flex flex-col items-center justify-center text-center p-6"></div>
+        <div class="grid grid-cols-3 gap-6 mb-14" id="cards">
+            <div id="card1" class="tarot-card bg-white/10 backdrop-blur-md"></div>
+            <div id="card2" class="tarot-card bg-white/10 backdrop-blur-md"></div>
+            <div id="card3" class="tarot-card bg-white/10 backdrop-blur-md"></div>
         </div>
 
         <button onclick="drawCards()" 
-                class="px-16 py-6 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-xl font-medium rounded-3xl shadow-xl transition-all">
+                class="px-16 py-7 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-xl font-medium rounded-3xl shadow-2xl transition-all">
             새로운 타로 3장 펼치기
         </button>
 
-        <!-- 해석 영역 -->
-        <div id="result" class="hidden mt-16 bg-white/10 backdrop-blur-md rounded-3xl p-10">
-            <h3 class="text-2xl font-bold text-white mb-8 text-center">당신의 연애운 해석</h3>
-            <div id="interpretation" class="interpretation-box text-purple-100 text-left leading-relaxed text-[17.2px] space-y-7 pr-4"></div>
+        <div id="result" class="hidden mt-16 bg-white/10 backdrop-blur-xl rounded-3xl p-10 text-left">
+            <h3 class="text-2xl font-bold text-white mb-10 text-center">당신의 연애운 해석</h3>
+            <div id="interpretation" class="text-purple-100 leading-relaxed text-[17.2px] space-y-8"></div>
         </div>
     </div>
 
     <script>
         const deck = [
-            { name: "달", desc: "불안과 착각" },
-            { name: "여사제", desc: "내면의 지혜" },
-            { name: "절제", desc: "균형과 조화" },
-            { name: "연인", desc: "강렬한 끌림" },
-            { name: "여황제", desc: "풍요로운 사랑" },
-            { name: "태양", desc: "밝은 행복" },
-            { name: "별", desc: "희망과 치유" },
-            { name: "탑", desc: "갑작스러운 변화" }
+            { name: "연인", desc: "강렬한 끌림과 선택", img: "https://picsum.photos/id/1015/600/800" },
+            { name: "여황제", desc: "풍요롭고 따뜻한 사랑", img: "https://picsum.photos/id/1027/600/800" },
+            { name: "여사제", desc: "내면의 지혜와 직관", img: "https://picsum.photos/id/1012/600/800" },
+            { name: "태양", desc: "밝고 따뜻한 행복", img: "https://picsum.photos/id/133/600/800" },
+            { name: "별", desc: "희망과 치유", img: "https://picsum.photos/id/201/600/800" },
+            { name: "달", desc: "불안과 착각", img: "https://picsum.photos/id/160/600/800" },
+            { name: "죽음", desc: "관계의 큰 전환", img: "https://picsum.photos/id/106/600/800" },
+            { name: "절제", desc: "균형과 조화", img: "https://picsum.photos/id/133/600/800" }
+        ];
+
+        // 30개의 순차적 해석 문구 (버튼 누를 때마다 순서대로 순환)
+        let currentIndex = 0;
+        const finalMessages = [
+            "당신은 혼자여도 충분히 빛나는 사람입니다. 진짜 사랑은 당신을 더 자유롭고 당당하게 만들어줄 거예요.",
+            "자신을 사랑하는 마음이 강해질수록 좋은 인연이 다가올 거예요. 오늘도 당신을 응원합니다.",
+            "과거의 상처를 잘 치유하고 있다면, 이제 더 건강하고 따뜻한 사랑이 찾아올 때입니다.",
+            "당신의 마음이 자유로워지면 진짜 사랑이 자연스럽게 들어올 거예요.",
+            "혼자 있는 시간이 소중해요. 그 시간이 당신을 더 아름답게 만들어줄 거예요.",
+            "당신은 사랑받을 자격이 충분한 사람입니다. 자신을 믿고 기다려보세요.",
+            "진짜 사랑은 당신을 더 강하고 행복하게 만들어줄 거예요. 포기하지 마세요.",
+            "현재 당신의 에너지는 매우 밝아요. 좋은 변화가 곧 찾아올 겁니다.",
+            "당신은 이미 충분히 매력적인 사람이에요. 자신감을 가져도 좋아요.",
+            "건강한 연애는 자신을 사랑하는 마음에서 시작됩니다. 그 마음을 잊지 마세요.",
+            "미래에는 서로를 존중하고 응원하는 따뜻한 관계가 기다리고 있어요.",
+            "당신의 행복은 결국 당신 스스로가 선택하는 거예요. 용기 내세요.",
+            "과거의 교훈을 잘 새기면, 이번에는 더 나은 사랑을 만날 수 있을 거예요.",
+            "당신은 강하고 아름다운 사람입니다. 그 사실을 잊지 마세요.",
+            "진짜 사랑은 당신을 자유롭게 만들어줄 거예요. 기대해도 좋아요.",
+            "자신을 먼저 돌보는 시간이 필요해요. 그 후에 좋은 인연이 올 거예요.",
+            "당신은 사랑을 받을 뿐만 아니라, 사랑을 줄 수 있는 멋진 사람이에요.",
+            "이번에는 과거의 패턴을 반복하지 않고 새로운 사랑을 시작할 수 있을 거예요.",
+            "당신의 마음이 안정되면 정말 좋은 사람이 다가올 가능성이 커요.",
+            "혼자여도 빛나는 당신이니까, 서두르지 않아도 괜찮아요.",
+            "건강하고 균형 잡힌 사랑이 곧 당신에게 찾아올 거예요.",
+            "당신은 이미 준비가 되어 있는 사람입니다. 좋은 타이밍을 기다려보세요.",
+            "진짜 사랑은 당신을 더 당당하고 행복하게 만들어줄 것입니다.",
+            "자신을 사랑하는 마음이 가장 중요한 열쇠예요.",
+            "미래에는 서로를 성장시켜주는 따뜻한 관계가 펼쳐질 거예요.",
+            "당신은 충분히 사랑받을 가치가 있는 사람입니다. 그걸 믿으세요.",
+            "과거를 잘 정리하면 더 밝은 연애운이 열릴 거예요.",
+            "당신의 행복은 당신 손에 있어요. 긍정적으로 생각해보세요.",
+            "진짜 사랑은 당신을 더 자유롭게 만들어줄 거예요.",
+            "당신은 혼자여도 충분히 멋진 사람이에요. 자신을 아껴주세요."
         ];
 
         function drawCards() {
@@ -58,33 +93,19 @@
             const c2 = shuffled[1];
             const c3 = shuffled[2];
 
-            document.getElementById('card1').innerHTML = `
-                <div class="text-6xl mb-4">🃏</div>
-                <p class="font-bold text-white text-xl">${c1.name}</p>
-                <p class="text-purple-300 text-sm mt-2">${c1.desc}</p>
-            `;
+            document.getElementById('card1').innerHTML = `<img src="${c1.img}" class="w-full h-full object-cover"><div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 p-6"><p class="text-white font-bold text-2xl">${c1.name}</p><p class="text-purple-200">${c1.desc}</p></div>`;
+            document.getElementById('card2').innerHTML = `<img src="${c2.img}" class="w-full h-full object-cover"><div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 p-6"><p class="text-white font-bold text-2xl">${c2.name}</p><p class="text-purple-200">${c2.desc}</p></div>`;
+            document.getElementById('card3').innerHTML = `<img src="${c3.img}" class="w-full h-full object-cover"><div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 p-6"><p class="text-white font-bold text-2xl">${c3.name}</p><p class="text-purple-200">${c3.desc}</p></div>`;
 
-            document.getElementById('card2').innerHTML = `
-                <div class="text-6xl mb-4">🃏</div>
-                <p class="font-bold text-white text-xl">${c2.name}</p>
-                <p class="text-purple-300 text-sm mt-2">${c2.desc}</p>
-            `;
+            // 30개 문구 순차적으로 순환
+            const message = finalMessages[currentIndex];
+            currentIndex = (currentIndex + 1) % finalMessages.length;
 
-            document.getElementById('card3').innerHTML = `
-                <div class="text-6xl mb-4">🃏</div>
-                <p class="font-bold text-white text-xl">${c3.name}</p>
-                <p class="text-purple-300 text-sm mt-2">${c3.desc}</p>
-            `;
-
-            // 해석
             document.getElementById('interpretation').innerHTML = `
-                <p><strong>과거:</strong> ${c1.desc}의 경험이 아직 당신의 마음에 영향을 주고 있습니다. 그때의 감정을 잘 돌아보세요.</p>
-                <p class="mt-7"><strong>현재:</strong> ${c2.desc}의 에너지가 강하게 느껴지는 시기예요. 자신을 먼저 돌보고 사랑해주세요.</p>
-                <p class="mt-7"><strong>미래:</strong> ${c3.desc}의 방향으로 흘러갈 가능성이 높습니다. 건강하고 따뜻한 관계를 기대해도 좋아요.</p>
-                <p class="mt-10 text-purple-200 border-t border-purple-700 pt-8">
-                    당신은 혼자여도 충분히 빛나는 사람입니다.<br>
-                    진짜 사랑은 당신을 더 자유롭고 당당하게 만들어줄 거예요.
-                </p>
+                <p><strong>과거:</strong> ${c1.desc}의 경험이 아직 당신의 마음에 영향을 주고 있습니다.</p>
+                <p class="mt-7"><strong>현재:</strong> ${c2.desc}의 에너지가 강하게 느껴지는 시기예요. 자신을 먼저 사랑해주세요.</p>
+                <p class="mt-7"><strong>미래:</strong> ${c3.desc}의 방향으로 흘러갈 가능성이 높습니다. 건강한 사랑을 기대해도 좋아요.</p>
+                <p class="mt-12 pt-8 border-t border-purple-700 text-purple-200 text-center">${message}</p>
             `;
 
             document.getElementById('result').classList.remove('hidden');
