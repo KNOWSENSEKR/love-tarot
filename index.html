@@ -8,6 +8,10 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;700&display=swap');
         body { font-family: 'Pretendard', sans-serif; }
+        .interpretation-box {
+            max-height: 420px;
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-purple-950 to-pink-950 min-h-screen py-12">
@@ -17,9 +21,9 @@
 
         <!-- 카드 3장 -->
         <div class="grid grid-cols-3 gap-6 mb-12" id="cards">
-            <div id="card1" class="bg-white/10 backdrop-blur-md rounded-3xl h-72 flex items-center justify-center text-center p-4"></div>
-            <div id="card2" class="bg-white/10 backdrop-blur-md rounded-3xl h-72 flex items-center justify-center text-center p-4"></div>
-            <div id="card3" class="bg-white/10 backdrop-blur-md rounded-3xl h-72 flex items-center justify-center text-center p-4"></div>
+            <div id="card1" class="bg-white/10 backdrop-blur-md rounded-3xl h-72 flex flex-col items-center justify-center text-center p-6"></div>
+            <div id="card2" class="bg-white/10 backdrop-blur-md rounded-3xl h-72 flex flex-col items-center justify-center text-center p-6"></div>
+            <div id="card3" class="bg-white/10 backdrop-blur-md rounded-3xl h-72 flex flex-col items-center justify-center text-center p-6"></div>
         </div>
 
         <button onclick="drawCards()" 
@@ -29,23 +33,21 @@
 
         <!-- 해석 영역 -->
         <div id="result" class="hidden mt-16 bg-white/10 backdrop-blur-md rounded-3xl p-10">
-            <h3 class="text-2xl font-bold text-white mb-8">당신의 연애운 해석</h3>
-            <div id="interpretation" class="text-purple-100 text-left leading-relaxed text-[17px] space-y-6"></div>
+            <h3 class="text-2xl font-bold text-white mb-8 text-center">당신의 연애운 해석</h3>
+            <div id="interpretation" class="interpretation-box text-purple-100 text-left leading-relaxed text-[17.2px] space-y-7 pr-4"></div>
         </div>
     </div>
 
     <script>
         const deck = [
-            { name: "연인", desc: "강렬한 끌림과 선택" },
-            { name: "여황제", desc: "풍요롭고 따뜻한 사랑" },
+            { name: "달", desc: "불안과 착각" },
             { name: "여사제", desc: "내면의 지혜" },
-            { name: "마법사", desc: "능동적인 사랑" },
+            { name: "절제", desc: "균형과 조화" },
+            { name: "연인", desc: "강렬한 끌림" },
+            { name: "여황제", desc: "풍요로운 사랑" },
             { name: "태양", desc: "밝은 행복" },
             { name: "별", desc: "희망과 치유" },
-            { name: "탑", desc: "갑작스러운 변화" },
-            { name: "달", desc: "불안과 착각" },
-            { name: "죽음", desc: "관계의 전환" },
-            { name: "절제", desc: "균형과 조화" }
+            { name: "탑", desc: "갑작스러운 변화" }
         ];
 
         function drawCards() {
@@ -56,20 +58,38 @@
             const c2 = shuffled[1];
             const c3 = shuffled[2];
 
-            document.getElementById('card1').innerHTML = `<div><div class="text-6xl mb-3">🃏</div><p class="font-bold text-white">${c1.name}</p><p class="text-purple-300 text-sm">${c1.desc}</p></div>`;
-            document.getElementById('card2').innerHTML = `<div><div class="text-6xl mb-3">🃏</div><p class="font-bold text-white">${c2.name}</p><p class="text-purple-300 text-sm">${c2.desc}</p></div>`;
-            document.getElementById('card3').innerHTML = `<div><div class="text-6xl mb-3">🃏</div><p class="font-bold text-white">${c3.name}</p><p class="text-purple-300 text-sm">${c3.desc}</p></div>`;
+            document.getElementById('card1').innerHTML = `
+                <div class="text-6xl mb-4">🃏</div>
+                <p class="font-bold text-white text-xl">${c1.name}</p>
+                <p class="text-purple-300 text-sm mt-2">${c1.desc}</p>
+            `;
 
+            document.getElementById('card2').innerHTML = `
+                <div class="text-6xl mb-4">🃏</div>
+                <p class="font-bold text-white text-xl">${c2.name}</p>
+                <p class="text-purple-300 text-sm mt-2">${c2.desc}</p>
+            `;
+
+            document.getElementById('card3').innerHTML = `
+                <div class="text-6xl mb-4">🃏</div>
+                <p class="font-bold text-white text-xl">${c3.name}</p>
+                <p class="text-purple-300 text-sm mt-2">${c3.desc}</p>
+            `;
+
+            // 해석
             document.getElementById('interpretation').innerHTML = `
-                <p><strong>과거:</strong> ${c1.desc}의 경험이 아직 영향을 주고 있습니다.</p>
-                <p class="mt-6"><strong>현재:</strong> ${c2.desc}의 에너지가 강하게 느껴지는 시기예요. 자신을 먼저 돌보세요.</p>
-                <p class="mt-6"><strong>미래:</strong> ${c3.desc}의 방향으로 흘러갈 가능성이 높습니다. 건강한 사랑을 기대해도 좋습니다.</p>
+                <p><strong>과거:</strong> ${c1.desc}의 경험이 아직 당신의 마음에 영향을 주고 있습니다. 그때의 감정을 잘 돌아보세요.</p>
+                <p class="mt-7"><strong>현재:</strong> ${c2.desc}의 에너지가 강하게 느껴지는 시기예요. 자신을 먼저 돌보고 사랑해주세요.</p>
+                <p class="mt-7"><strong>미래:</strong> ${c3.desc}의 방향으로 흘러갈 가능성이 높습니다. 건강하고 따뜻한 관계를 기대해도 좋아요.</p>
+                <p class="mt-10 text-purple-200 border-t border-purple-700 pt-8">
+                    당신은 혼자여도 충분히 빛나는 사람입니다.<br>
+                    진짜 사랑은 당신을 더 자유롭고 당당하게 만들어줄 거예요.
+                </p>
             `;
 
             document.getElementById('result').classList.remove('hidden');
         }
 
-        // 페이지 로드 시 자동으로 한 번 펼침
         window.onload = drawCards;
     </script>
 </body>
