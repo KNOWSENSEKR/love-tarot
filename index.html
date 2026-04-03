@@ -3,229 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>연애운 타로 | 3장 스프레드 + AI 상담</title>
+    <title>연애운 타로</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;700&display=swap');
         body { font-family: 'Pretendard', sans-serif; }
-        .card {
-            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-            transform-style: preserve-3d;
-            cursor: pointer;
-            height: 280px;
-        }
-        .card.flipped { transform: rotateY(180deg); }
-        .card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.9s;
-            transform-style: preserve-3d;
-        }
-        .card-front, .card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 18px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
-            overflow: hidden;
-        }
-        .card-front {
-            background: linear-gradient(135deg, #4c1d95, #9f1239);
-            color: #f3e8ff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.45rem;
-            font-weight: 700;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.7);
-        }
-        .card-back {
-            background: #0f172a;
-            transform: rotateY(180deg);
-        }
-        .card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(0.9) contrast(1.05);
-        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-purple-950 to-pink-950 min-h-screen py-12">
-    <div class="max-w-2xl mx-auto px-4">
-        <h1 class="text-4xl font-bold text-center mb-2 text-purple-200">연애운 타로</h1>
-        <p class="text-center text-purple-300 mb-10">3장으로 보는 당신의 연애 이야기</p>
+    <div class="max-w-2xl mx-auto px-4 text-center">
+        <h1 class="text-4xl font-bold text-white mb-2">연애운 타로</h1>
+        <p class="text-purple-300 mb-12">3장으로 보는 당신의 연애 이야기</p>
 
-        <!-- 타로 카드 3장 -->
-        <div class="grid grid-cols-3 gap-6 mb-10" id="cards">
-            <div class="card" onclick="flipCard(this)">
-                <div class="card-inner">
-                    <div class="card-front">과거</div>
-                    <div class="card-back" id="past"></div>
-                </div>
-            </div>
-            <div class="card" onclick="flipCard(this)">
-                <div class="card-inner">
-                    <div class="card-front">현재</div>
-                    <div class="card-back" id="present"></div>
-                </div>
-            </div>
-            <div class="card" onclick="flipCard(this)">
-                <div class="card-inner">
-                    <div class="card-front">미래</div>
-                    <div class="card-back" id="future"></div>
-                </div>
-            </div>
+        <!-- 카드 3장 -->
+        <div class="grid grid-cols-3 gap-6 mb-12" id="cards">
+            <div id="card1" class="bg-white/10 backdrop-blur-md rounded-3xl h-72 flex items-center justify-center text-center p-4"></div>
+            <div id="card2" class="bg-white/10 backdrop-blur-md rounded-3xl h-72 flex items-center justify-center text-center p-4"></div>
+            <div id="card3" class="bg-white/10 backdrop-blur-md rounded-3xl h-72 flex items-center justify-center text-center p-4"></div>
         </div>
 
-        <div class="text-center">
-            <button onclick="drawNewCards()" 
-                    class="px-12 py-5 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-2xl font-medium text-lg shadow-lg hover:shadow-xl transition-all">
-                새로운 타로 뽑기
-            </button>
-        </div>
+        <button onclick="drawCards()" 
+                class="px-16 py-6 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-xl font-medium rounded-3xl shadow-xl transition-all">
+            새로운 타로 3장 펼치기
+        </button>
 
         <!-- 해석 영역 -->
-        <div id="result" class="hidden mt-12 bg-white rounded-3xl p-9 shadow-2xl">
-            <h3 class="text-2xl font-bold text-center mb-8 text-purple-800">당신의 연애운 해석</h3>
-            <div id="interpretation" class="text-gray-700 leading-relaxed text-[17.2px] space-y-6"></div>
-            
-            <button onclick="openChat()" 
-                    class="mt-10 w-full py-4 bg-purple-700 hover:bg-purple-800 text-white rounded-2xl font-medium text-lg">
-                ✨ AI 타로 마스터에게 더 자세히 물어보기
-            </button>
-        </div>
-    </div>
-
-    <!-- 챗봇 모달 -->
-    <div id="chatModal" class="hidden fixed inset-0 bg-black/70 flex items-end justify-center z-50">
-        <div class="bg-white w-full max-w-lg rounded-t-3xl h-[85vh] flex flex-col">
-            <div class="p-5 border-b flex justify-between items-center bg-purple-800 text-white rounded-t-3xl">
-                <div>
-                    <p class="font-bold">타로 마스터 세라</p>
-                    <p class="text-xs opacity-75">AI 연애운 상담사</p>
-                </div>
-                <button onclick="closeChat()" class="text-3xl leading-none">×</button>
-            </div>
-            
-            <div id="chatMessages" class="flex-1 p-5 overflow-y-auto space-y-4 bg-gray-50">
-                <!-- 메시지가 들어가는 곳 -->
-            </div>
-
-            <div class="p-4 border-t flex gap-2">
-                <input id="userInput" type="text" placeholder="예: 이 사람이 나를 진심으로 좋아할까?" 
-                       class="flex-1 border rounded-2xl px-5 py-3 focus:outline-none focus:border-purple-500">
-                <button onclick="sendMessage()" 
-                        class="bg-purple-700 hover:bg-purple-800 text-white px-8 rounded-2xl font-medium">전송</button>
-            </div>
+        <div id="result" class="hidden mt-16 bg-white/10 backdrop-blur-md rounded-3xl p-10">
+            <h3 class="text-2xl font-bold text-white mb-8">당신의 연애운 해석</h3>
+            <div id="interpretation" class="text-purple-100 text-left leading-relaxed text-[17px] space-y-6"></div>
         </div>
     </div>
 
     <script>
-        const tarotDeck = [
-            { name: "바보", desc: "새로운 시작과 순수한 마음", img: "https://picsum.photos/id/1015/300/420" },
-            { name: "마법사", desc: "능동적으로 사랑을 이끌어가는 힘", img: "https://picsum.photos/id/106/300/420" },
-            { name: "여사제", desc: "내면의 지혜와 직관", img: "https://picsum.photos/id/1012/300/420" },
-            { name: "여황제", desc: "풍요롭고 따뜻한 사랑 에너지", img: "https://picsum.photos/id/1027/300/420" },
-            { name: "황제", desc: "안정과 보호의 에너지", img: "https://picsum.photos/id/133/300/420" },
-            { name: "연인", desc: "강렬한 끌림과 선택의 순간", img: "https://picsum.photos/id/201/300/420" },
-            { name: "전차", desc: "방향을 잡고 나아가는 시기", img: "https://picsum.photos/id/160/300/420" },
-            { name: "힘", desc: "용기와 열정", img: "https://picsum.photos/id/1015/300/420" },
-            { name: "은둔자", desc: "자기 성찰과 내면 탐구", img: "https://picsum.photos/id/1027/300/420" },
-            { name: "운명의 수레바퀴", desc: "인연의 변화와 타이밍", img: "https://picsum.photos/id/106/300/420" },
-            { name: "정의", desc: "균형과 공정한 관계", img: "https://picsum.photos/id/133/300/420" },
-            { name: "매달린 사람", desc: "관점의 전환", img: "https://picsum.photos/id/201/300/420" },
-            { name: "죽음", desc: "관계의 큰 전환", img: "https://picsum.photos/id/160/300/420" },
-            { name: "절제", desc: "균형과 조화", img: "https://picsum.photos/id/1015/300/420" },
-            { name: "악마", desc: "집착과 중독의 관계", img: "https://picsum.photos/id/1027/300/420" },
-            { name: "탑", desc: "갑작스러운 변화", img: "https://picsum.photos/id/106/300/420" },
-            { name: "별", desc: "희망과 치유", img: "https://picsum.photos/id/133/300/420" },
-            { name: "달", desc: "불안과 착각", img: "https://picsum.photos/id/201/300/420" },
-            { name: "태양", desc: "밝고 따뜻한 행복", img: "https://picsum.photos/id/160/300/420" },
-            { name: "심판", desc: "재평가와 새로운 시작", img: "https://picsum.photos/id/1015/300/420" },
-            { name: "세계", desc: "완성된 사랑과 조화", img: "https://picsum.photos/id/1027/300/420" }
+        const deck = [
+            { name: "연인", desc: "강렬한 끌림과 선택" },
+            { name: "여황제", desc: "풍요롭고 따뜻한 사랑" },
+            { name: "여사제", desc: "내면의 지혜" },
+            { name: "마법사", desc: "능동적인 사랑" },
+            { name: "태양", desc: "밝은 행복" },
+            { name: "별", desc: "희망과 치유" },
+            { name: "탑", desc: "갑작스러운 변화" },
+            { name: "달", desc: "불안과 착각" },
+            { name: "죽음", desc: "관계의 전환" },
+            { name: "절제", desc: "균형과 조화" }
         ];
 
-        const interpretations = [
-            "과거의 경험은 당신을 더 강하게 만들었어요. 이제는 자신을 우선으로 하는 사랑을 만나게 될 거예요.",
-            "현재 당신은 누군가에게 의지하기보다는 스스로를 사랑하는 법을 배우고 있어요. 이 과정이 매우 소중합니다.",
-            "미래에는 건강하고 존중받는 관계가 기다리고 있어요. 당신의 행복은 당신 스스로가 선택하는 거예요.",
-            "당신은 이미 충분히 빛나는 사람이에요. 진짜 사랑은 당신을 더 자유롭게 만들어줄 거예요.",
-            "과거의 아픔이 지금의 당신을 더 현명하게 만들었어요. 이제는 자신을 아끼는 선택을 할 때입니다.",
-            "현재는 자신을 돌아보는 시간이 필요해요. 당신의 마음을 먼저 채우면 좋은 인연이 자연스럽게 다가올 거예요.",
-            "미래에는 균형 잡힌, 서로를 존중하는 사랑이 찾아올 가능성이 높아요. 기대해도 좋아요.",
-            "당신은 혼자여도 충분히 행복할 수 있는 사람입니다. 그 마음이 진짜 사랑을 끌어당길 거예요.",
-            "과거의 교훈을 잘 새기고 있다면, 이번에는 훨씬 더 건강한 관계를 만들 수 있을 거예요.",
-            "현재 당신의 에너지는 매우 밝아요. 자신을 사랑하는 마음이 강해질수록 좋은 일이 생길 거예요."
-        ];
+        function drawCards() {
+            document.getElementById('result').classList.add('hidden');
 
-        function drawNewCards() {
-            document.querySelectorAll('.card').forEach(card => card.classList.remove('flipped'));
+            const shuffled = [...deck].sort(() => Math.random() - 0.5);
+            const c1 = shuffled[0];
+            const c2 = shuffled[1];
+            const c3 = shuffled[2];
 
-            const shuffled = [...tarotDeck].sort(() => Math.random() - 0.5);
-            const card1 = shuffled[0];
-            const card2 = shuffled[1];
-            const card3 = shuffled[2];
+            document.getElementById('card1').innerHTML = `<div><div class="text-6xl mb-3">🃏</div><p class="font-bold text-white">${c1.name}</p><p class="text-purple-300 text-sm">${c1.desc}</p></div>`;
+            document.getElementById('card2').innerHTML = `<div><div class="text-6xl mb-3">🃏</div><p class="font-bold text-white">${c2.name}</p><p class="text-purple-300 text-sm">${c2.desc}</p></div>`;
+            document.getElementById('card3').innerHTML = `<div><div class="text-6xl mb-3">🃏</div><p class="font-bold text-white">${c3.name}</p><p class="text-purple-300 text-sm">${c3.desc}</p></div>`;
 
-            document.getElementById('past').innerHTML = `<img src="${card1.img}" class="card-img rounded-t-2xl" alt="${card1.name}"><p class="text-xl font-bold text-purple-200 mt-3">${card1.name}</p><p class="mt-2 text-purple-300 text-sm">${card1.desc}</p>`;
-            document.getElementById('present').innerHTML = `<img src="${card2.img}" class="card-img rounded-t-2xl" alt="${card2.name}"><p class="text-xl font-bold text-purple-200 mt-3">${card2.name}</p><p class="mt-2 text-purple-300 text-sm">${card2.desc}</p>`;
-            document.getElementById('future').innerHTML = `<img src="${card3.img}" class="card-img rounded-t-2xl" alt="${card3.name}"><p class="text-xl font-bold text-purple-200 mt-3">${card3.name}</p><p class="mt-2 text-purple-300 text-sm">${card3.desc}</p>`;
+            document.getElementById('interpretation').innerHTML = `
+                <p><strong>과거:</strong> ${c1.desc}의 경험이 아직 영향을 주고 있습니다.</p>
+                <p class="mt-6"><strong>현재:</strong> ${c2.desc}의 에너지가 강하게 느껴지는 시기예요. 자신을 먼저 돌보세요.</p>
+                <p class="mt-6"><strong>미래:</strong> ${c3.desc}의 방향으로 흘러갈 가능성이 높습니다. 건강한 사랑을 기대해도 좋습니다.</p>
+            `;
 
-            const randomInterpretation = interpretations[Math.floor(Math.random() * interpretations.length)];
-            document.getElementById('interpretation').innerHTML = randomInterpretation;
             document.getElementById('result').classList.remove('hidden');
         }
 
-        function flipCard(card) {
-            card.classList.toggle('flipped');
-        }
-
-        // 챗봇 관련 함수들
-        function openChat() {
-            document.getElementById('chatModal').classList.remove('hidden');
-            document.getElementById('chatMessages').innerHTML = '';
-            addBotMessage("안녕하세요, 저는 타로 마스터 세라예요. 방금 뽑은 타로에 대해 궁금한 점이 있으신가요?");
-        }
-
-        function closeChat() {
-            document.getElementById('chatModal').classList.add('hidden');
-        }
-
-        function addBotMessage(text) {
-            const chat = document.getElementById('chatMessages');
-            chat.innerHTML += `<div class="flex gap-3"><div class="w-8 h-8 bg-purple-600 rounded-full"></div><div class="bg-purple-100 p-4 rounded-2xl rounded-tl-none">${text}</div></div>`;
-            chat.scrollTop = chat.scrollHeight;
-        }
-
-        function addUserMessage(text) {
-            const chat = document.getElementById('chatMessages');
-            chat.innerHTML += `<div class="flex justify-end"><div class="bg-purple-600 text-white p-4 rounded-2xl rounded-tr-none">${text}</div></div>`;
-            chat.scrollTop = chat.scrollHeight;
-        }
-
-        function sendMessage() {
-            const input = document.getElementById('userInput');
-            const text = input.value.trim();
-            if (!text) return;
-
-            addUserMessage(text);
-            input.value = "";
-
-            setTimeout(() => {
-                const replies = [
-                    "타로 카드가 말해주는 건...",
-                    "그 부분은 조금 더 기다려보는 게 좋을 것 같아요.",
-                    "당신의 마음이 중요해요. 자신을 먼저 사랑해주세요.",
-                    "좋은 변화가 다가오고 있어요. 긍정적으로 생각해보세요."
-                ];
-                addBotMessage(replies[Math.floor(Math.random() * replies.length)]);
-            }, 700);
-        }
-
-        window.onload = drawNewCards;
+        // 페이지 로드 시 자동으로 한 번 펼침
+        window.onload = drawCards;
     </script>
 </body>
 </html>
