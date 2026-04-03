@@ -12,12 +12,13 @@
             transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
             transform-style: preserve-3d;
             cursor: pointer;
+            height: 260px;
         }
         .card.flipped { transform: rotateY(180deg); }
         .card-inner {
             position: relative;
             width: 100%;
-            height: 220px;
+            height: 100%;
             text-align: center;
             transition: transform 0.8s;
             transform-style: preserve-3d;
@@ -29,21 +30,23 @@
             backface-visibility: hidden;
             border-radius: 16px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
         .card-front {
             background: linear-gradient(135deg, #7c3aed, #db2777);
             color: white;
-            font-size: 1.35rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
             font-weight: 600;
         }
         .card-back {
             background: white;
             transform: rotateY(180deg);
-            padding: 20px;
+            padding: 16px;
+            display: flex;
             flex-direction: column;
+            justify-content: center;
         }
     </style>
 </head>
@@ -56,19 +59,19 @@
             <div class="card" onclick="flipCard(this)">
                 <div class="card-inner">
                     <div class="card-front">과거</div>
-                    <div class="card-back" id="past"></div>
+                    <div class="card-back" id="past-card"></div>
                 </div>
             </div>
             <div class="card" onclick="flipCard(this)">
                 <div class="card-inner">
                     <div class="card-front">현재</div>
-                    <div class="card-back" id="present"></div>
+                    <div class="card-back" id="present-card"></div>
                 </div>
             </div>
             <div class="card" onclick="flipCard(this)">
                 <div class="card-inner">
                     <div class="card-front">미래</div>
-                    <div class="card-back" id="future"></div>
+                    <div class="card-back" id="future-card"></div>
                 </div>
             </div>
         </div>
@@ -80,7 +83,7 @@
             </button>
         </div>
 
-        <div id="result" class="mt-12">
+        <div id="result" class="mt-12 hidden">
             <div class="bg-white rounded-3xl p-9 shadow-xl">
                 <h3 class="text-2xl font-bold text-center mb-8 text-purple-800">당신의 연애운 해석</h3>
                 <div id="interpretation" class="text-gray-700 leading-relaxed text-[17.2px] space-y-6"></div>
@@ -108,9 +111,19 @@
             const present = shuffled[1];
             const future = shuffled[2];
 
-            document.getElementById('past').innerHTML = `<p class="text-2xl font-bold text-purple-700">${past.name}</p><p class="mt-4 text-gray-600">${past.desc}</p>`;
-            document.getElementById('present').innerHTML = `<p class="text-2xl font-bold text-purple-700">${present.name}</p><p class="mt-4 text-gray-600">${present.desc}</p>`;
-            document.getElementById('future').innerHTML = `<p class="text-2xl font-bold text-purple-700">${future.name}</p><p class="mt-4 text-gray-600">${future.desc}</p>`;
+            // 카드 초기화 후 새로 채우기
+            document.getElementById('past-card').innerHTML = `
+                <p class="text-2xl font-bold text-purple-700">${past.name}</p>
+                <p class="mt-4 text-gray-600">${past.desc}</p>
+            `;
+            document.getElementById('present-card').innerHTML = `
+                <p class="text-2xl font-bold text-purple-700">${present.name}</p>
+                <p class="mt-4 text-gray-600">${present.desc}</p>
+            `;
+            document.getElementById('future-card').innerHTML = `
+                <p class="text-2xl font-bold text-purple-700">${future.name}</p>
+                <p class="mt-4 text-gray-600">${future.desc}</p>
+            `;
 
             const interpretation = `
                 <p><strong>과거:</strong> ${past.desc}의 경험이 아직 당신의 마음속에 남아있습니다. 그때의 아픔과 배움은 지금의 당신을 더 단단하고 현명하게 만들어 주었어요.</p>
@@ -123,13 +136,14 @@
             `;
 
             document.getElementById('interpretation').innerHTML = interpretation;
+            document.getElementById('result').classList.remove('hidden');
         }
 
         function flipCard(card) {
             card.classList.toggle('flipped');
         }
 
-        // 페이지 로드 시 자동으로 카드 뽑기
+        // 페이지 로드 시 자동으로 첫 카드 뽑기
         window.onload = drawCards;
     </script>
 </body>
