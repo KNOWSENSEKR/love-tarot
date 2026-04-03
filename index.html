@@ -43,7 +43,7 @@
         .card-back {
             background: white;
             transform: rotateY(180deg);
-            padding: 16px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -59,19 +59,19 @@
             <div class="card" onclick="flipCard(this)">
                 <div class="card-inner">
                     <div class="card-front">과거</div>
-                    <div class="card-back" id="past-card"></div>
+                    <div class="card-back" id="past"></div>
                 </div>
             </div>
             <div class="card" onclick="flipCard(this)">
                 <div class="card-inner">
                     <div class="card-front">현재</div>
-                    <div class="card-back" id="present-card"></div>
+                    <div class="card-back" id="present"></div>
                 </div>
             </div>
             <div class="card" onclick="flipCard(this)">
                 <div class="card-inner">
                     <div class="card-front">미래</div>
-                    <div class="card-back" id="future-card"></div>
+                    <div class="card-back" id="future"></div>
                 </div>
             </div>
         </div>
@@ -106,24 +106,19 @@
         ];
 
         function drawCards() {
+            // 모든 카드를 원래 상태로 되돌리기 (중요!)
+            document.querySelectorAll('.card').forEach(card => {
+                card.classList.remove('flipped');
+            });
+
             const shuffled = [...tarotDeck].sort(() => Math.random() - 0.5);
             const past = shuffled[0];
             const present = shuffled[1];
             const future = shuffled[2];
 
-            // 카드 초기화 후 새로 채우기
-            document.getElementById('past-card').innerHTML = `
-                <p class="text-2xl font-bold text-purple-700">${past.name}</p>
-                <p class="mt-4 text-gray-600">${past.desc}</p>
-            `;
-            document.getElementById('present-card').innerHTML = `
-                <p class="text-2xl font-bold text-purple-700">${present.name}</p>
-                <p class="mt-4 text-gray-600">${present.desc}</p>
-            `;
-            document.getElementById('future-card').innerHTML = `
-                <p class="text-2xl font-bold text-purple-700">${future.name}</p>
-                <p class="mt-4 text-gray-600">${future.desc}</p>
-            `;
+            document.getElementById('past').innerHTML = `<p class="text-2xl font-bold text-purple-700">${past.name}</p><p class="mt-4 text-gray-600">${past.desc}</p>`;
+            document.getElementById('present').innerHTML = `<p class="text-2xl font-bold text-purple-700">${present.name}</p><p class="mt-4 text-gray-600">${present.desc}</p>`;
+            document.getElementById('future').innerHTML = `<p class="text-2xl font-bold text-purple-700">${future.name}</p><p class="mt-4 text-gray-600">${future.desc}</p>`;
 
             const interpretation = `
                 <p><strong>과거:</strong> ${past.desc}의 경험이 아직 당신의 마음속에 남아있습니다. 그때의 아픔과 배움은 지금의 당신을 더 단단하고 현명하게 만들어 주었어요.</p>
