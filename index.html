@@ -9,13 +9,11 @@
         @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;700&display=swap');
         body { font-family: 'Pretendard', sans-serif; }
         .card {
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
             transform-style: preserve-3d;
             cursor: pointer;
         }
-        .card.flipped {
-            transform: rotateY(180deg);
-        }
+        .card.flipped { transform: rotateY(180deg); }
         .card-inner {
             position: relative;
             width: 100%;
@@ -53,7 +51,7 @@
         <h1 class="text-4xl font-bold text-center mb-2 text-purple-800">연애운 타로</h1>
         <p class="text-center text-purple-600 mb-10">3장으로 보는 당신의 연애 이야기</p>
 
-        <!-- 카드 3장 항상 보이게 -->
+        <!-- 카드 영역 -->
         <div class="grid grid-cols-3 gap-6" id="cards">
             <div class="card" onclick="flipCard(this)">
                 <div class="card-inner">
@@ -82,7 +80,7 @@
             </button>
         </div>
 
-        <div id="result" class="mt-12 hidden">
+        <div id="result" class="mt-12">
             <div class="bg-white rounded-3xl p-9 shadow-xl">
                 <h3 class="text-2xl font-bold text-center mb-8 text-purple-800">당신의 연애운 해석</h3>
                 <div id="interpretation" class="text-gray-700 leading-relaxed text-[17.2px] space-y-6"></div>
@@ -125,14 +123,13 @@
             `;
 
             document.getElementById('interpretation').innerHTML = interpretation;
-            document.getElementById('result').classList.remove('hidden');
         }
 
         function flipCard(card) {
             card.classList.toggle('flipped');
         }
 
-        // 페이지 로드 시 자동으로 한 번 뽑기
+        // 페이지 로드와 동시에 자동으로 카드 뽑기
         window.onload = drawCards;
     </script>
 </body>
