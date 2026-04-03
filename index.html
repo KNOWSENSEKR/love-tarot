@@ -33,14 +33,14 @@
             overflow: hidden;
         }
         .card-front {
-            background: linear-gradient(135deg, #3b0764, #6b21a8);
+            background: linear-gradient(135deg, #4c1d95, #9f1239);
             color: #f3e8ff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
+            font-size: 1.45rem;
             font-weight: 700;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.7);
         }
         .card-back {
             background: #0f172a;
@@ -50,7 +50,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(0.85) contrast(1.1) sepia(0.1);
+            filter: brightness(0.9) contrast(1.05);
         }
     </style>
 </head>
@@ -96,14 +96,32 @@
     </div>
 
     <script>
-        // 3개의 서로 다른 타로 카드 이미지 (중복 방지)
-        const tarotCards = [
-            { name: "연인",   desc: "강렬한 끌림과 선택의 순간", img: "https://picsum.photos/id/1015/300/420" },
+        // 메이저 아르카나 22장 (타로 표준)
+        const tarotDeck = [
+            { name: "바보", desc: "새로운 시작과 순수한 마음", img: "https://picsum.photos/id/1015/300/420" },
+            { name: "마법사", desc: "능동적으로 사랑을 이끌어가는 힘", img: "https://picsum.photos/id/106/300/420" },
+            { name: "여사제", desc: "내면의 지혜와 직관", img: "https://picsum.photos/id/1012/300/420" },
             { name: "여황제", desc: "풍요롭고 따뜻한 사랑 에너지", img: "https://picsum.photos/id/1027/300/420" },
-            { name: "여사제", desc: "내면의 지혜와 직관", img: "https://picsum.photos/id/1012/300/420" }
+            { name: "황제", desc: "안정과 보호의 에너지", img: "https://picsum.photos/id/133/300/420" },
+            { name: "연인", desc: "강렬한 끌림과 선택의 순간", img: "https://picsum.photos/id/201/300/420" },
+            { name: "전차", desc: "방향을 잡고 나아가는 시기", img: "https://picsum.photos/id/160/300/420" },
+            { name: "힘", desc: "용기와 열정", img: "https://picsum.photos/id/1015/300/420" },
+            { name: "은둔자", desc: "자기 성찰과 내면 탐구", img: "https://picsum.photos/id/1027/300/420" },
+            { name: "운명의 수레바퀴", desc: "인연의 변화와 타이밍", img: "https://picsum.photos/id/106/300/420" },
+            { name: "정의", desc: "균형과 공정한 관계", img: "https://picsum.photos/id/133/300/420" },
+            { name: "매달린 사람", desc: "관점의 전환", img: "https://picsum.photos/id/201/300/420" },
+            { name: "죽음", desc: "관계의 큰 전환", img: "https://picsum.photos/id/160/300/420" },
+            { name: "절제", desc: "균형과 조화", img: "https://picsum.photos/id/1015/300/420" },
+            { name: "악마", desc: "집착과 중독의 관계", img: "https://picsum.photos/id/1027/300/420" },
+            { name: "탑", desc: "갑작스러운 변화", img: "https://picsum.photos/id/106/300/420" },
+            { name: "별", desc: "희망과 치유", img: "https://picsum.photos/id/133/300/420" },
+            { name: "달", desc: "불안과 착각", img: "https://picsum.photos/id/201/300/420" },
+            { name: "태양", desc: "밝고 따뜻한 행복", img: "https://picsum.photos/id/160/300/420" },
+            { name: "심판", desc: "재평가와 새로운 시작", img: "https://picsum.photos/id/1015/300/420" },
+            { name: "세계", desc: "완성된 사랑과 조화", img: "https://picsum.photos/id/1027/300/420" }
         ];
 
-        // 30개의 다양한 해석 문구
+        // 30개의 해석 문구 (희망적 + 독립적)
         const interpretations = [
             "과거의 경험은 당신을 더 강하게 만들었어요. 이제는 자신을 우선으로 하는 사랑을 만나게 될 거예요.",
             "현재 당신은 누군가에게 의지하기보다는 스스로를 사랑하는 법을 배우고 있어요. 이 과정이 매우 소중합니다.",
@@ -117,15 +135,14 @@
             "현재 당신의 에너지는 매우 밝아요. 자신을 사랑하는 마음이 강해질수록 좋은 일이 생길 거예요."
         ];
 
-        let currentIndex = 0;
-
         function drawNewCards() {
             document.querySelectorAll('.card').forEach(card => card.classList.remove('flipped'));
 
-            // 3개의 카드를 순차적으로 회전
-            const card1 = tarotCards[0];
-            const card2 = tarotCards[1];
-            const card3 = tarotCards[2];
+            // 22장 중에서 매번 다른 3장 랜덤 선택
+            const shuffled = [...tarotDeck].sort(() => Math.random() - 0.5);
+            const card1 = shuffled[0];
+            const card2 = shuffled[1];
+            const card3 = shuffled[2];
 
             document.getElementById('past').innerHTML = `<img src="${card1.img}" class="card-img rounded-t-2xl" alt="${card1.name}"><p class="text-xl font-bold text-purple-200 mt-3">${card1.name}</p><p class="mt-2 text-purple-300 text-sm">${card1.desc}</p>`;
             document.getElementById('present').innerHTML = `<img src="${card2.img}" class="card-img rounded-t-2xl" alt="${card2.name}"><p class="text-xl font-bold text-purple-200 mt-3">${card2.name}</p><p class="mt-2 text-purple-300 text-sm">${card2.desc}</p>`;
@@ -135,8 +152,6 @@
 
             document.getElementById('interpretation').innerHTML = randomInterpretation;
             document.getElementById('result').classList.remove('hidden');
-
-            currentIndex = (currentIndex + 1) % tarotCards.length;
         }
 
         function flipCard(card) {
