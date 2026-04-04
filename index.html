@@ -1,184 +1,19 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>마음코드 연애심리 타로 v1.4 - 지브리 에디션</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
-        
-        body { 
-            font-family: 'Noto Sans KR', sans-serif; 
-            background-image: url('https://knowsensekr.github.io/love-tarot/bg.png'); 
-            background-size: cover; 
-            background-position: center; 
-            background-attachment: fixed; 
-            color: #fff; 
-            text-align: center; 
-            margin: 0; 
-            padding: 10px; 
-            min-height: 100vh; 
-            word-break: keep-all;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(13, 0, 26, 0.7); 
-            z-index: -1;
-        }
-
-        h1 { 
-            font-size: 1.6rem; 
-            color: #fff; 
-            margin: 25px 0 15px; 
-            text-shadow: 0 0 10px rgba(255,255,255,0.2); 
-            position: relative; 
-        }
-        .brand-point { 
-            color: #00FFCC; 
-            text-shadow: 0 0 15px rgba(0,255,204,0.8);
-            font-weight: 900;
-        }
-
-        .sub-btn { 
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center;
-            background: linear-gradient(to right, #FF0000, #CC0000); 
-            color: white; 
-            padding: 10px 22px; 
-            font-size: 0.9rem; 
-            font-weight: 700;
-            border-radius: 6px; 
-            text-decoration: none; 
-            margin-bottom: 25px;
-            box-shadow: 0 4px 15px rgba(255,0,0,0.3); 
-            transition: 0.3s;
-            position: relative; 
-        }
-        .sub-btn::before {
-            content: '▶'; 
-            font-size: 0.7rem;
-            margin-right: 8px;
-            background: white;
-            color: #FF0000;
-            width: 18px;
-            height: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 4px;
-        }
-        .sub-btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(255,0,0,0.5); }
-        
-        .description { font-size: 0.95rem; margin-bottom: 25px; color: #ffddff; opacity: 0.8; position: relative;}
-        
-        button#draw-btn { 
-            background: linear-gradient(45deg, #ff3399, #ff66cc); 
-            color: white; 
-            border: none; 
-            padding: 15px 35px; 
-            font-size: 1.1rem; 
-            font-weight: 700; 
-            border-radius: 50px; 
-            cursor: pointer; 
-            box-shadow: 0 8px 20px rgba(255,51,153,0.5); 
-            transition: 0.3s; 
-            position: relative;
-        }
-
-        .cards { display: flex; justify-content: center; gap: 8px; margin: 30px 0; position: relative;}
-        .card { width: 31%; max-width: 130px; aspect-ratio: 2/3; perspective: 1000px; }
-        .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; border-radius: 8px; }
-        .card.flipped .card-inner { transform: rotateY(180deg); }
-        .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 8px; overflow: hidden; }
-        .card-back { background: #3a0066 url('back.png') center/cover no-repeat; border: 1.5px solid #ff66cc; }
-        .card-front { background: #1a0033; transform: rotateY(180deg); display: flex; flex-direction: column; align-items: center; }
-        .card-front img { width: 100%; height: 75%; object-fit: cover; }
-        .card-name { font-size: 0.85rem; font-weight: 900; color: #ffccff; margin-top: 5px; }
-
-        .interpretation { 
-            max-width: 550px; 
-            margin: 30px auto; 
-            background: rgba(0,0,0,0.6); 
-            border-radius: 15px; 
-            padding: 20px; 
-            text-align: left;
-            display: none; 
-            border: 1px solid rgba(255,255,255,0.1);
-            position: relative;
-        }
-        .position { font-size: 1.05rem; color: #00FFCC; margin: 18px 0 5px; font-weight: 700; border-left: 3px solid #ff3399; padding-left: 8px; }
-        .message { font-size: 0.9rem; line-height: 1.7; color: #eee; }
-
-        .total-fortune {
-            margin-top: 30px;
-            padding: 22px;
-            background: linear-gradient(135deg, rgba(255,51,153,0.3), rgba(0,255,204,0.1));
-            border: 1.5px solid #ff3399;
-            border-radius: 12px;
-            text-align: center;
-        }
-        .total-title { font-size: 1.3rem; color: #fff; margin-bottom: 12px; text-shadow: 0 0 10px #ff3399; font-weight: 900; }
-        
-        .final-cta {
-            display: inline-block;
-            margin-top: 15px;
-            font-size: 1.1rem;
-            font-weight: 900;
-            color: #FFD700; 
-            text-decoration: none;
-            padding: 12px 24px;
-            border: 2px solid #FFD700;
-            border-radius: 8px;
-            background: rgba(0,0,0,0.5);
-            transition: 0.3s;
-            animation: pulse-gold 2s infinite;
-        }
-        
-        @keyframes pulse-gold {
-            0% { transform: scale(1); box-shadow: 0 0 5px #FFD700; }
-            50% { transform: scale(1.03); box-shadow: 0 0 20px rgba(255,215,0,0.6); }
-            100% { transform: scale(1); box-shadow: 0 0 5px #FFD700; }
-        }
-
-        footer { margin-top: 50px; padding-bottom: 20px; font-size: 0.75rem; color: rgba(255,255,255,0.4); position: relative;}
-
-        @media (max-width: 480px) {
-            h1 { font-size: 1.4rem; }
-            .final-cta { font-size: 0.95rem; width: 85%; }
-            body { background-attachment: scroll; } 
-        }
-    </style>
-</head>
-<body>
-    <h1>🔮 <span class="brand-point">마음코드</span> 연애심리 타로 v1.4</h1>
-    <a href="https://www.youtube.com/@mindcode_k" target="_blank" class="sub-btn">마음코드 구독하기</a>
-    
-    <div class="description">마음을 가다듬고 버튼을 눌러주세요</div>
-    <button id="draw-btn" onclick="drawCards()">운명의 카드 3장 뽑기</button>
-
-    <div class="cards" id="cards"></div>
-    <div id="interpretation" class="interpretation"></div>
-
-    <footer>
-        © 2026 마음코드. All rights reserved. 심리학 기반 연애 솔루션
-    </footer>
-
-    <script>
+<script>
         const cardNames = ["바보","마법사","여교황","여황제","황제","교황","연인","전차","힘","은둔자","운명의 수레바퀴","정의","매달린 사람","죽음","절제","악마","탑","별","달","태양","심판","세계"];
+        
+        // 1. 개별 카드(과거, 현재, 미래)를 위한 전용 해석 풀 (중복 방지를 위해 8개로 구성)
         const loveMessages = [
             "상대방은 깊이 생각하고 있지만 자존심 때문에 먼저 다가오지 못하고 있어요. 기다림이 필요한 시기입니다.",
             "현재 관계는 작은 변화로도 회복 가능합니다. 희소성 원리를 적용해 연락을 잠시 멈춰보세요.",
             "추억을 떠올리며 후회 중입니다. 하지만 겉으로는 태연한 척하고 있네요.",
             "스스로의 가치가 높아질수록 상대는 자연스럽게 돌아오게 됩니다. 지금은 스스로를 돌보세요.",
             "희소성 원리를 활용하면 상대가 자연스럽게 불안해하며 먼저 다가올 것입니다.",
-            "마음속에 여전히 큰 자리를 차지하고 있어요. 조만간 신호가 올 것입니다."
+            "마음속에 여전히 큰 자리를 차지하고 있어요. 조만간 신호가 올 것입니다.",
+            "과거의 헌신이 오히려 가치 하락을 불렀을 수 있습니다. 이제는 패턴을 바꿔야 할 때입니다.",
+            "지금의 침묵은 독이 아니라 약입니다. 상대가 빈자리를 느끼게 할 시간이 필요합니다."
         ];
-        
-        // 사용자가 제공한 52개의 종합 솔루션 원본 데이터 이식 완료
+
+        // 2. 마음코드 종합 솔루션을 위한 52개 심화 데이터 풀
         const totalSummaries = [
             "상대방은 당신을 아직도 깊이 생각하고 있지만, 자존심과 두려움 때문에 먼저 다가오지 못하고 있어요. 지금은 당신이 조금 물러서서 기다리는 것이 효과적입니다.",
             "현재 관계는 작은 변화만으로도 충분히 회복될 수 있는 단계예요. 연락을 멈추고 자신을 가꾸며 희소성 원리를 자연스럽게 적용해보세요.",
@@ -239,14 +74,20 @@
             const interpDiv = document.getElementById('interpretation');
             const drawBtn = document.getElementById('draw-btn');
             
+            // 버튼 텍스트 변경
             drawBtn.innerText = '카드 다시 뽑기';
 
+            // 1. 타로 카드 번호 무작위 3장 뽑기
             let cardIndices = Array.from({length: 22}, (_, i) => i + 1);
             for (let i = cardIndices.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [cardIndices[i], cardIndices[j]] = [cardIndices[j], cardIndices[i]];
             }
             const selectedCards = cardIndices.slice(0, 3);
+
+            // 2. 과거/현재/미래 개별 해석 무작위 3개 뽑기 (중복 방지)
+            let shuffledLoveMessages = [...loveMessages].sort(() => 0.5 - Math.random());
+            const selectedIndividualMessages = shuffledLoveMessages.slice(0, 3);
 
             container.innerHTML = '';
             interpDiv.innerHTML = '';
@@ -255,9 +96,10 @@
             const positions = ['[과거] 연애 흐름', '[현재] 상대방 속마음', '[미래] 관계 변화'];
             let drawnMessages = [];
 
+            // 카드 렌더링 및 개별 해석 할당
             selectedCards.forEach((num, i) => {
                 const name = cardNames[num - 1];
-                const msg = loveMessages[Math.floor(Math.random() * loveMessages.length)];
+                const msg = selectedIndividualMessages[i];
                 drawnMessages.push(msg);
 
                 container.innerHTML += `
@@ -273,12 +115,15 @@
                 setTimeout(() => document.getElementById(`card${i}`).classList.add('flipped'), 150 + i * 150);
             });
 
+            // 개별 해석 영역 HTML 생성
             let html = `<h2 style="font-size:1.3rem; color:#00FFCC; text-align:center; margin-bottom:15px;">🔮 카드 분석 결과</h2>`;
             for (let i = 0; i < 3; i++) {
                 html += `<div class="position">${positions[i]}</div><div class="message">${drawnMessages[i]}</div>`;
             }
 
-            const summary = totalSummaries[Math.floor(Math.random() * totalSummaries.length)];
+            // 3. 52개 종합 솔루션 풀에서 1개 무작위 뽑기
+            const summary = totalSummaries[Math.floor(Math.random() * totalSummaries.length)]; 
+            
             html += `
                 <div class="total-fortune">
                     <div class="total-title">🌟 마음코드 종합 솔루션</div>
@@ -289,6 +134,7 @@
                 </div>`;
             interpDiv.innerHTML = html;
 
+            // 결과 화면으로 부드럽게 스크롤
             setTimeout(() => interpDiv.scrollIntoView({ behavior: 'smooth' }), 800);
         }
 
@@ -297,5 +143,3 @@
             for (let i = 0; i < 3; i++) container.innerHTML += `<div class="card"><div class="card-inner"><div class="card-back"></div></div></div>`;
         };
     </script>
-</body>
-</html>
