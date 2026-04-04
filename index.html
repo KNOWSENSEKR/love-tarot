@@ -6,31 +6,38 @@
     <title>연애운 타로</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;700&display=swap');
-        body { font-family: 'Pretendard', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap');
+        body { 
+            font-family: 'Pretendard', sans-serif; 
+            background: linear-gradient(135deg, #1a0f2e, #2a1b4a, #3a1f4f);
+        }
         .tarot-card {
-            height: 320px;
-            border-radius: 18px;
+            height: 340px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.65);
             position: relative;
+            transition: transform 0.4s ease;
+        }
+        .tarot-card:hover {
+            transform: scale(1.04);
         }
         .card-label {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
-            padding: 20px 12px 16px;
+            background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+            padding: 28px 16px 20px;
             color: white;
             text-align: center;
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-purple-950 via-indigo-950 to-pink-950 min-h-screen py-12">
+<body class="min-h-screen py-12">
     <div class="max-w-2xl mx-auto px-4 text-center">
-        <h1 class="text-5xl font-bold text-white mb-3">연애운 타로</h1>
-        <p class="text-purple-300 text-lg mb-12">3장으로 보는 당신의 연애 이야기</p>
+        <h1 class="text-5xl font-bold text-white mb-3 tracking-tight">연애운 타로</h1>
+        <p class="text-purple-300 text-lg mb-14">3장으로 보는 당신의 연애 이야기</p>
 
         <div class="grid grid-cols-3 gap-6 mb-14" id="cards">
             <div id="card1" class="tarot-card"></div>
@@ -39,40 +46,25 @@
         </div>
 
         <button onclick="drawCards()" 
-                class="px-16 py-7 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-xl font-medium rounded-3xl shadow-2xl transition-all">
+                class="px-20 py-7 text-xl font-medium rounded-3xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-2xl transition-all active:scale-95">
             새로운 타로 3장 펼치기
         </button>
 
-        <div id="result" class="hidden mt-16 bg-white/10 backdrop-blur-xl rounded-3xl p-10 text-left">
+        <div id="result" class="hidden mt-16 bg-white/10 backdrop-blur-2xl rounded-3xl p-12 text-left border border-white/10">
             <h3 class="text-2xl font-bold text-white mb-10 text-center">당신의 연애운 해석</h3>
-            <div id="interpretation" class="text-purple-100 leading-relaxed text-[17.2px] space-y-8"></div>
+            <div id="interpretation" class="text-purple-100 leading-relaxed text-[17.3px] space-y-8"></div>
         </div>
     </div>
 
     <script>
-        // 주인님이 올린 실제 이미지 4개 사용
-        const deck = [
-            { 
-                name: "연인", 
-                desc: "강렬한 끌림과 선택", 
-                img: "https://knowsensekr.github.io/love-tarot/402ef5a2-a723-487c-8a74-cff0228bd20f.jpg" 
-            },
-            { 
-                name: "여황제", 
-                desc: "풍요롭고 따뜻한 사랑", 
-                img: "https://knowsensekr.github.io/love-tarot/41698711-c651-4c56-8cb6-523eca1be0c9.jpg" 
-            },
-            { 
-                name: "여사제", 
-                desc: "내면의 지혜와 직관", 
-                img: "https://knowsensekr.github.io/love-tarot/c57042e8-632b-4b11-8bb8-5312747e30dd.jpg" 
-            },
-            { 
-                name: "태양", 
-                desc: "밝고 따뜻한 행복", 
-                img: "https://knowsensekr.github.io/love-tarot/e70d49c9-1bc3-4977-8c2b-8f42e65f83cb.jpg" 
-            }
-        ];
+        // 클로드가 만든 정확한 주소: https://knowsensekr.github.io/love/1.png ~ 22.png
+        const baseUrl = "https://knowsensekr.github.io/love/";
+
+        const deck = Array.from({ length: 22 }, (_, i) => ({
+            name: `타로 카드 ${i+1}`,
+            desc: "연애운",
+            img: `${baseUrl}${i+1}.png`
+        }));
 
         let currentIndex = 0;
 
@@ -117,9 +109,9 @@
             const c2 = shuffled[1];
             const c3 = shuffled[2];
 
-            document.getElementById('card1').innerHTML = `<img src="${c1.img}" class="w-full h-full object-cover"><div class="card-label"><p class="font-bold text-2xl">${c1.name}</p><p class="text-sm">${c1.desc}</p></div>`;
-            document.getElementById('card2').innerHTML = `<img src="${c2.img}" class="w-full h-full object-cover"><div class="card-label"><p class="font-bold text-2xl">${c2.name}</p><p class="text-sm">${c2.desc}</p></div>`;
-            document.getElementById('card3').innerHTML = `<img src="${c3.img}" class="w-full h-full object-cover"><div class="card-label"><p class="font-bold text-2xl">${c3.name}</p><p class="text-sm">${c3.desc}</p></div>`;
+            document.getElementById('card1').innerHTML = `<img src="${c1.img}" class="w-full h-full object-cover"><div class="card-label"><p class="font-bold text-2xl">${c1.name}</p><p class="text-sm opacity-90">${c1.desc}</p></div>`;
+            document.getElementById('card2').innerHTML = `<img src="${c2.img}" class="w-full h-full object-cover"><div class="card-label"><p class="font-bold text-2xl">${c2.name}</p><p class="text-sm opacity-90">${c2.desc}</p></div>`;
+            document.getElementById('card3').innerHTML = `<img src="${c3.img}" class="w-full h-full object-cover"><div class="card-label"><p class="font-bold text-2xl">${c3.name}</p><p class="text-sm opacity-90">${c3.desc}</p></div>`;
 
             const message = finalMessages[currentIndex];
             currentIndex = (currentIndex + 1) % finalMessages.length;
@@ -128,7 +120,7 @@
                 <p><strong>과거:</strong> ${c1.desc}의 경험이 아직 당신의 마음에 영향을 주고 있습니다.</p>
                 <p class="mt-7"><strong>현재:</strong> ${c2.desc}의 에너지가 강하게 느껴지는 시기예요. 자신을 먼저 사랑해주세요.</p>
                 <p class="mt-7"><strong>미래:</strong> ${c3.desc}의 방향으로 흘러갈 가능성이 높습니다. 건강한 사랑을 기대해도 좋아요.</p>
-                <p class="mt-12 pt-8 border-t border-purple-700 text-purple-200 text-center">${message}</p>
+                <p class="mt-12 pt-8 border-t border-purple-700/50 text-purple-200 text-center font-medium">${message}</p>
             `;
 
             document.getElementById('result').classList.remove('hidden');
