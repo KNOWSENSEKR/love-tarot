@@ -57,14 +57,33 @@
     </div>
 
     <script>
-        // 클로드가 만든 정확한 주소: https://knowsensekr.github.io/love/1.png ~ 22.png
         const baseUrl = "https://knowsensekr.github.io/love/";
 
-        const deck = Array.from({ length: 22 }, (_, i) => ({
-            name: `타로 카드 ${i+1}`,
-            desc: "연애운",
-            img: `${baseUrl}${i+1}.png`
-        }));
+        // 1.png ~ 22.png에 정확한 카드 이름 매핑
+        const deck = [
+            { num: 1,  name: "바보",       desc: "새로운 시작과 순수한 마음" },
+            { num: 2,  name: "마법사",     desc: "능동적으로 사랑을 이끌어가는 힘" },
+            { num: 3,  name: "여사제",     desc: "내면의 지혜와 직관" },
+            { num: 4,  name: "여황제",     desc: "풍요롭고 따뜻한 사랑 에너지" },
+            { num: 5,  name: "황제",       desc: "안정과 보호의 에너지" },
+            { num: 6,  name: "교황",       desc: "전통과 조언" },
+            { num: 7,  name: "연인",       desc: "강렬한 끌림과 선택의 순간" },
+            { num: 8,  name: "전차",       desc: "방향을 잡고 나아가는 시기" },
+            { num: 9,  name: "힘",         desc: "용기와 열정" },
+            { num: 10, name: "은둔자",     desc: "자기 성찰과 내면 탐구" },
+            { num: 11, name: "운명의 바퀴", desc: "인연의 변화와 타이밍" },
+            { num: 12, name: "정의",       desc: "균형과 공정한 관계" },
+            { num: 13, name: "매달린 사람", desc: "관점의 전환" },
+            { num: 14, name: "죽음",       desc: "관계의 큰 전환" },
+            { num: 15, name: "절제",       desc: "균형과 조화" },
+            { num: 16, name: "악마",       desc: "집착과 중독의 관계" },
+            { num: 17, name: "탑",         desc: "갑작스러운 변화" },
+            { num: 18, name: "별",         desc: "희망과 치유" },
+            { num: 19, name: "달",         desc: "불안과 착각" },
+            { num: 20, name: "태양",       desc: "밝고 따뜻한 행복" },
+            { num: 21, name: "심판",       desc: "재평가와 새로운 시작" },
+            { num: 22, name: "세계",       desc: "완성된 사랑과 조화" }
+        ];
 
         let currentIndex = 0;
 
@@ -109,9 +128,9 @@
             const c2 = shuffled[1];
             const c3 = shuffled[2];
 
-            document.getElementById('card1').innerHTML = `<img src="${c1.img}" class="w-full h-full object-cover"><div class="card-label"><p class="font-bold text-2xl">${c1.name}</p><p class="text-sm opacity-90">${c1.desc}</p></div>`;
-            document.getElementById('card2').innerHTML = `<img src="${c2.img}" class="w-full h-full object-cover"><div class="card-label"><p class="font-bold text-2xl">${c2.name}</p><p class="text-sm opacity-90">${c2.desc}</p></div>`;
-            document.getElementById('card3').innerHTML = `<img src="${c3.img}" class="w-full h-full object-cover"><div class="card-label"><p class="font-bold text-2xl">${c3.name}</p><p class="text-sm opacity-90">${c3.desc}</p></div>`;
+            document.getElementById('card1').innerHTML = `<img src="${baseUrl}${c1.num}.png" class="w-full h-full object-cover"><div class="card-label"><p class="font-bold text-2xl">${c1.name}</p><p class="text-sm">${c1.desc}</p></div>`;
+            document.getElementById('card2').innerHTML = `<img src="${baseUrl}${c2.num}.png" class="w-full h-full object-cover"><div class="card-label"><p class="font-bold text-2xl">${c2.name}</p><p class="text-sm">${c2.desc}</p></div>`;
+            document.getElementById('card3').innerHTML = `<img src="${baseUrl}${c3.num}.png" class="w-full h-full object-cover"><div class="card-label"><p class="font-bold text-2xl">${c3.name}</p><p class="text-sm">${c3.desc}</p></div>`;
 
             const message = finalMessages[currentIndex];
             currentIndex = (currentIndex + 1) % finalMessages.length;
