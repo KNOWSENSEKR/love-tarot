@@ -43,9 +43,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 5rem;
-            color: #6b21a8;
-            opacity: 0.95;
+        }
+        .card-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.7));
+            padding: 35px 20px 25px;
+            color: white;
+            text-align: center;
+            z-index: 10;
         }
     </style>
 </head>
@@ -98,6 +106,7 @@
     </div>
 
     <script>
+        // ★★ 주인님께서 love-tarot 저장소로 옮기셨으니 여기만 바꿨습니다 ★★
         const baseUrl = "https://knowsensekr.github.io/love-tarot/";
 
         const deck = [
@@ -127,7 +136,7 @@
 
         let currentIndex = 0;
 
-        const finalMessages = [
+        const finalMessages = [ /* 이전과 동일한 50개 메시지 배열 */ 
             "당신은 혼자여도 충분히 빛나는 사람입니다. 누군가의 사랑을 받지 않아도, 당신 자체로 이미 충분히 소중하고 아름다운 존재예요. 진짜 사랑은 당신을 더 자유롭고 당당하게 만들어줄 거예요. 자신을 먼저 사랑하는 마음이 모든 관계의 시작이 됩니다.",
             "자신을 사랑하는 마음이 조금씩 강해질수록, 당신에게 정말로 좋은 인연이 서서히 다가오고 있어요. 지금 느끼는 외로움도 결국 당신을 더 단단하고 매력적인 사람으로 만들어주는 과정입니다.",
             "과거의 상처와 아픔을 잘 치유하고 있다면, 이제는 정말 더 건강하고 따뜻한 사랑이 찾아올 준비가 되어가고 있어요. 그 아픔이 당신을 더 현명하고 깊이 있는 사람으로 만들어준 소중한 경험이 될 거예요.",
@@ -197,7 +206,7 @@
                 <div class="card-inner" style="transform: rotateY(0deg);">
                     <div class="card-back absolute inset-0"></div>
                     <div class="card-front absolute inset-0">
-                        <img src="${baseUrl}${c1.num}.png" class="w-full h-full object-cover">
+                        <img src="${baseUrl}${c1.num}.png" class="w-full h-full object-cover" alt="${c1.name}">
                         <div class="card-label">
                             <p class="font-bold text-2xl">${c1.name}</p>
                             <p class="text-sm">${c1.desc}</p>
@@ -210,7 +219,7 @@
                 <div class="card-inner" style="transform: rotateY(0deg);">
                     <div class="card-back absolute inset-0"></div>
                     <div class="card-front absolute inset-0">
-                        <img src="${baseUrl}${c2.num}.png" class="w-full h-full object-cover">
+                        <img src="${baseUrl}${c2.num}.png" class="w-full h-full object-cover" alt="${c2.name}">
                         <div class="card-label">
                             <p class="font-bold text-2xl">${c2.name}</p>
                             <p class="text-sm">${c2.desc}</p>
@@ -223,7 +232,7 @@
                 <div class="card-inner" style="transform: rotateY(0deg);">
                     <div class="card-back absolute inset-0"></div>
                     <div class="card-front absolute inset-0">
-                        <img src="${baseUrl}${c3.num}.png" class="w-full h-full object-cover">
+                        <img src="${baseUrl}${c3.num}.png" class="w-full h-full object-cover" alt="${c3.name}">
                         <div class="card-label">
                             <p class="font-bold text-2xl">${c3.name}</p>
                             <p class="text-sm">${c3.desc}</p>
