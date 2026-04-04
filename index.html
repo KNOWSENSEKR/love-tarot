@@ -16,116 +16,49 @@
             padding: 20px;
             min-height: 100vh;
         }
-        h1 {
-            font-size: 2.9rem;
-            color: #ffccff;
-            margin: 25px 0 8px;
-            text-shadow: 0 0 20px rgba(255, 100, 255, 0.8);
-        }
+        h1 { font-size: 2.9rem; color: #ffccff; margin: 25px 0 8px; text-shadow: 0 0 20px rgba(255,100,255,0.8); }
         .sub-btn {
-            display: inline-block;
-            background: #ff3399;
-            color: white;
-            padding: 14px 34px;
-            font-size: 1.15rem;
-            border-radius: 50px;
-            text-decoration: none;
-            margin: 10px 0 25px;
-            box-shadow: 0 8px 20px rgba(255, 51, 153, 0.4);
+            display: inline-block; background: #ff3399; color: white; padding: 14px 34px;
+            font-size: 1.15rem; border-radius: 50px; text-decoration: none; margin: 10px 0 25px;
+            box-shadow: 0 8px 20px rgba(255,51,153,0.4);
         }
         .sub-btn:hover { background: #ff66bb; transform: scale(1.05); }
 
         .description { font-size: 1.35rem; margin: 15px 0 40px; color: #ffddff; }
 
         button {
-            background: linear-gradient(45deg, #ff3399, #ff66cc);
-            color: white;
-            border: none;
-            padding: 16px 42px;
-            font-size: 1.35rem;
-            font-weight: 700;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 10px 25px rgba(255, 51, 153, 0.5);
+            background: linear-gradient(45deg, #ff3399, #ff66cc); color: white; border: none;
+            padding: 16px 42px; font-size: 1.35rem; font-weight: 700; border-radius: 50px;
+            cursor: pointer; box-shadow: 0 10px 25px rgba(255,51,153,0.5);
             transition: all 0.3s;
         }
-        button:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255, 51, 153, 0.6); }
+        button:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255,51,153,0.6); }
 
-        .cards {
-            display: flex;
-            justify-content: center;
-            gap: 28px;
-            margin: 45px 0;
-            flex-wrap: wrap;
-        }
-        .card {
-            width: 210px;
-            height: 300px;
-            perspective: 1300px;
-        }
+        .cards { display: flex; justify-content: center; gap: 28px; margin: 45px 0; flex-wrap: wrap; }
+        .card { width: 210px; height: 300px; perspective: 1300px; }
         .card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transition: transform 1s cubic-bezier(0.25, 0.1, 0.25, 1);
-            transform-style: preserve-3d;
-            border-radius: 18px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+            position: relative; width: 100%; height: 100%; transition: transform 1s cubic-bezier(0.25,0.1,0.25,1);
+            transform-style: preserve-3d; border-radius: 18px; box-shadow: 0 20px 40px rgba(0,0,0,0.7);
         }
         .card.flipped .card-inner { transform: rotateY(180deg); }
         .card-front, .card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 18px;
-            overflow: hidden;
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 18px; overflow: hidden;
         }
         .card-back { background: url('back.png') center/cover no-repeat; }
         .card-front {
-            background: #1a0033;
-            color: #fff;
-            transform: rotateY(180deg);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            padding-top: 15px;
+            background: #1a0033; color: #fff; transform: rotateY(180deg);
+            display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 15px;
         }
-        .card-front img {
-            width: 100%;
-            height: 210px;
-            object-fit: cover;
-            border-radius: 18px 18px 0 0;
-        }
-        .card-name {
-            font-size: 32px;
-            font-weight: 900;
-            color: #ffccff;
-            margin: 12px 0 6px;
-            text-shadow: 0 2px 8px rgba(255, 100, 255, 0.6);
-        }
+        .card-front img { width: 100%; height: 210px; object-fit: cover; border-radius: 18px 18px 0 0; }
+        .card-name { font-size: 32px; font-weight: 900; color: #ffccff; margin: 12px 0 6px; text-shadow: 0 2px 8px rgba(255,100,255,0.6); }
         .card-desc { font-size: 15px; color: #ddd; padding: 0 15px; line-height: 1.4; }
 
         .interpretation {
-            max-width: 820px;
-            margin: 60px auto 0;
-            background: rgba(255,255,255,0.08);
-            border-radius: 20px;
-            padding: 40px 30px;
+            max-width: 820px; margin: 60px auto 0; background: rgba(255,255,255,0.08);
+            border-radius: 20px; padding: 40px 30px;
         }
-        .position {
-            font-size: 1.65rem;
-            color: #ffccff;
-            margin: 32px 0 12px;
-            font-weight: 700;
-        }
-        .message {
-            font-size: 1.22rem;
-            line-height: 1.85;
-            color: #ffeeee;
-            padding: 0 10px;
-        }
+        .position { font-size: 1.65rem; color: #ffccff; margin: 32px 0 12px; font-weight: 700; }
+        .message { font-size: 1.22rem; line-height: 1.85; color: #ffeeee; padding: 0 10px; }
     </style>
 </head>
 <body>
@@ -136,13 +69,12 @@
     <button onclick="drawCards()">새로운 타로 3장 펼치기</button>
 
     <div class="cards" id="cards"></div>
-
     <div class="interpretation" id="interpretation"></div>
 
     <script>
         const cardNames = ["바보","마법사","여교황","여황제","황제","교황","연인","전차","힘","은둔자","운명의 수레바퀴","정의","매달린 사람","죽음","절제","악마","탑","별","달","태양","심판","세계"];
         
-        const loveMessages = [
+        const loveMessages = [ /* 50개 그대로 유지 */ 
             "상대방은 당신을 아직도 깊이 생각하고 있지만, 자존심과 두려움 때문에 먼저 다가오지 못하고 있어요. 지금은 당신이 조금 물러서서 기다리는 것이 효과적입니다.",
             "현재 관계는 작은 변화만으로도 충분히 회복될 수 있는 단계예요. 연락을 멈추고 자신을 가꾸며 희소성 원리를 자연스럽게 적용해보세요.",
             "상대는 당신과의 좋은 추억을 자주 떠올리며 후회하고 있습니다. 하지만 자존심 때문에 솔직한 마음을 표현하지 못하고 있어요.",
@@ -202,13 +134,22 @@
         }
 
         function drawCards() {
+            console.log("🔮 drawCards() 실행됨");   // 디버깅용
+
             const container = document.getElementById('cards');
             const interpDiv = document.getElementById('interpretation');
+            
+            if (!interpDiv) {
+                console.error("interpretation 요소를 찾을 수 없습니다!");
+                return;
+            }
+
             container.innerHTML = '';
-            interpDiv.innerHTML = '';
+            interpDiv.innerHTML = '';   // ← 여기서 강제로 초기화
 
             const positions = ['과거', '현재', '미래'];
 
+            // 카드 3장 생성 및 뒤집기
             for (let i = 0; i < 3; i++) {
                 const num = getRandomCard();
                 const name = cardNames[num - 1];
@@ -228,36 +169,11 @@
                 container.innerHTML += cardHTML;
 
                 setTimeout(() => {
-                    document.getElementById(`card${i}`).classList.add('flipped');
+                    const cardEl = document.getElementById(`card${i}`);
+                    if (cardEl) cardEl.classList.add('flipped');
                 }, 180 + i * 160);
             }
 
+            // 해석 부분 생성 (이 부분이 핵심!)
             let html = `<h2 style="color:#ffccff; margin-bottom:40px;">당신의 연애운 해석</h2>`;
             for (let i = 0; i < 3; i++) {
-                const randomMsg = loveMessages[Math.floor(Math.random() * loveMessages.length)];
-                html += `
-                    <div class="position">${positions[i]}</div>
-                    <div class="message">${randomMsg}</div>
-                `;
-            }
-            interpDiv.innerHTML = html;
-        }
-
-        window.onload = () => {
-            const container = document.getElementById('cards');
-            let html = '';
-            for (let i = 0; i < 3; i++) {
-                html += `
-                    <div class="card">
-                        <div class="card-inner">
-                            <div class="card-back"></div>
-                            <div class="card-front"></div>
-                        </div>
-                    </div>
-                `;
-            }
-            container.innerHTML = html;
-        };
-    </script>
-</body>
-</html>
