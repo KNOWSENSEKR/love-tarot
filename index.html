@@ -1,55 +1,74 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>마음코드 연애심리 타로 v1.2</title>
+    <title>마음코드 연애심리 타로 v1.4</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
         
         body { 
             font-family: 'Noto Sans KR', sans-serif; 
-            background: linear-gradient(135deg, #2a0044, #4a0077); 
+            background: linear-gradient(135deg, #1a0033, #2a0044); 
             color: #fff; 
             text-align: center; 
             margin: 0; 
-            padding: 10px; /* 모바일 여백 축소 */
+            padding: 10px; 
             min-height: 100vh; 
             word-break: keep-all;
         }
 
-        /* 최상단 제목 및 버튼 모바일 최적화 */
+        /* 제목 및 브랜드 강조 */
         h1 { 
-            font-size: 1.8rem; /* 사이즈 대폭 축소 */
-            color: #ffccff; 
-            margin: 20px 0 10px; 
-            text-shadow: 0 0 15px rgba(255,100,255,0.8); 
+            font-size: 1.6rem; 
+            color: #fff; 
+            margin: 25px 0 15px; 
+            text-shadow: 0 0 10px rgba(255,255,255,0.2); 
         }
+        .brand-point { 
+            color: #00FFCC; 
+            text-shadow: 0 0 15px rgba(0,255,204,0.8);
+            font-weight: 900;
+        }
+
+        /* 유튜브 스타일 구독 버튼 */
         .sub-btn { 
-            display: inline-block; 
-            background: #ff3399; 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center;
+            background: linear-gradient(to right, #FF0000, #CC0000); 
             color: white; 
-            padding: 8px 20px; /* 슬림하게 변경 */
+            padding: 10px 22px; 
             font-size: 0.9rem; 
-            border-radius: 50px; 
+            font-weight: 700;
+            border-radius: 6px; 
             text-decoration: none; 
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(255,51,153,0.4); 
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(255,0,0,0.3); 
             transition: 0.3s;
         }
-        
-        .description { 
-            font-size: 1rem; 
-            margin-bottom: 25px; 
-            color: #ffddff; 
+        .sub-btn::before {
+            content: '▶'; 
+            font-size: 0.7rem;
+            margin-right: 8px;
+            background: white;
+            color: #FF0000;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
         }
+        .sub-btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(255,0,0,0.5); }
+        
+        .description { font-size: 0.95rem; margin-bottom: 25px; color: #ffddff; opacity: 0.8; }
         
         button { 
             background: linear-gradient(45deg, #ff3399, #ff66cc); 
             color: white; 
             border: none; 
-            padding: 14px 30px; 
+            padding: 15px 35px; 
             font-size: 1.1rem; 
             font-weight: 700; 
             border-radius: 50px; 
@@ -58,123 +77,87 @@
             transition: 0.3s; 
         }
 
-        /* 카드 그리드 최적화 */
-        .cards { 
-            display: flex; 
-            justify-content: center; 
-            gap: 10px; 
-            margin: 30px 0; 
-            flex-wrap: nowrap; /* 모바일에서 가로 일렬 유지 */
-        }
-        .card { 
-            width: 30%; /* 가로 3장 자동 조절 */
-            max-width: 150px;
-            aspect-ratio: 2 / 3;
-            perspective: 1000px; 
-        }
-        .card-inner { 
-            position: relative; 
-            width: 100%; 
-            height: 100%; 
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); 
-            transform-style: preserve-3d; 
-            border-radius: 8px; 
-        }
-        .card.flipped .card-inner { 
-            transform: rotateY(180deg); 
-        }
-        .card-front, .card-back { 
-            position: absolute; 
-            width: 100%; 
-            height: 100%; 
-            backface-visibility: hidden; 
-            border-radius: 8px; 
-            overflow: hidden; 
-        }
-        .card-back { 
-            background: #3a0066 url('back.png') center/cover no-repeat; 
-            border: 1.5px solid #ff66cc;
-        }
-        .card-front { 
-            background: #1a0033; 
-            transform: rotateY(180deg); 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-        }
-        .card-front img { 
-            width: 100%; 
-            height: 75%; 
-            object-fit: cover; 
-        }
-        .card-name { 
-            font-size: 0.9rem; 
-            font-weight: 900; 
-            color: #ffccff; 
-            margin-top: 5px; 
-        }
+        .cards { display: flex; justify-content: center; gap: 8px; margin: 30px 0; }
+        .card { width: 31%; max-width: 130px; aspect-ratio: 2/3; perspective: 1000px; }
+        .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; border-radius: 8px; }
+        .card.flipped .card-inner { transform: rotateY(180deg); }
+        .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 8px; overflow: hidden; }
+        .card-back { background: #3a0066 url('back.png') center/cover no-repeat; border: 1.5px solid #ff66cc; }
+        .card-front { background: #1a0033; transform: rotateY(180deg); display: flex; flex-direction: column; align-items: center; }
+        .card-front img { width: 100%; height: 75%; object-fit: cover; }
+        .card-name { font-size: 0.85rem; font-weight: 900; color: #ffccff; margin-top: 5px; }
 
-        /* 해석 섹션 최적화 */
         .interpretation { 
-            max-width: 600px; 
+            max-width: 550px; 
             margin: 30px auto; 
-            background: rgba(255,255,255,0.1); 
+            background: rgba(0,0,0,0.4); 
             border-radius: 15px; 
             padding: 20px; 
             text-align: left;
             display: none; 
+            border: 1px solid rgba(255,255,255,0.1);
         }
-        .position { 
-            font-size: 1.1rem; 
-            color: #ffccff; 
-            margin: 20px 0 5px; 
-            font-weight: 700; 
-            border-left: 3px solid #ff3399;
-            padding-left: 8px;
-        }
-        .message { 
-            font-size: 0.95rem; 
-            line-height: 1.6; 
-            color: #eee; 
-        }
+        .position { font-size: 1.05rem; color: #00FFCC; margin: 18px 0 5px; font-weight: 700; border-left: 3px solid #ff3399; padding-left: 8px; }
+        .message { font-size: 0.9rem; line-height: 1.7; color: #eee; }
+
+        /* 하단 종합 솔루션 강조 */
         .total-fortune {
             margin-top: 30px;
-            padding: 20px;
-            background: linear-gradient(135deg, rgba(255,51,153,0.2), rgba(74,0,119,0.4));
+            padding: 22px;
+            background: linear-gradient(135deg, rgba(255,51,153,0.3), rgba(0,255,204,0.1));
             border: 1.5px solid #ff3399;
             border-radius: 12px;
-        }
-        .total-title {
-            font-size: 1.3rem;
-            color: #fff;
             text-align: center;
-            margin-bottom: 12px;
-            text-shadow: 0 0 10px #ff3399;
+        }
+        .total-title { font-size: 1.3rem; color: #fff; margin-bottom: 12px; text-shadow: 0 0 10px #ff3399; font-weight: 900; }
+        
+        .final-cta {
+            display: inline-block;
+            margin-top: 15px;
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #FFD700; 
+            text-decoration: none;
+            padding: 12px 24px;
+            border: 2px solid #FFD700;
+            border-radius: 8px;
+            background: rgba(0,0,0,0.5);
+            transition: 0.3s;
+            animation: pulse-gold 2s infinite;
+        }
+        
+        @keyframes pulse-gold {
+            0% { transform: scale(1); box-shadow: 0 0 5px #FFD700; }
+            50% { transform: scale(1.03); box-shadow: 0 0 20px rgba(255,215,0,0.6); }
+            100% { transform: scale(1); box-shadow: 0 0 5px #FFD700; }
         }
 
-        /* 모바일용 폰트 크기 미세 조정 */
+        footer { margin-top: 50px; padding-bottom: 20px; font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+
         @media (max-width: 480px) {
-            h1 { font-size: 1.5rem; }
-            button { font-size: 1rem; padding: 12px 25px; }
-            .card-name { font-size: 0.8rem; }
+            h1 { font-size: 1.4rem; }
+            .final-cta { font-size: 0.95rem; width: 85%; }
         }
     </style>
 </head>
 <body>
-    <h1>🔮 마음코드 연애심리 타로 v1.2</h1>
+    <h1>🔮 <span class="brand-point">마음코드</span> 연애심리 타로 v1.4</h1>
     <a href="https://www.youtube.com/@mindcode_k" target="_blank" class="sub-btn">마음코드 구독하기</a>
-    <div class="description">당신의 사랑 이야기가 시작됩니다</div>
-
+    
+    <div class="description">마음을 가다듬고 버튼을 눌러주세요</div>
     <button onclick="drawCards()">운명의 카드 3장 뽑기</button>
 
     <div class="cards" id="cards"></div>
     <div id="interpretation" class="interpretation"></div>
 
+    <footer>
+        © 2026 마음코드. All rights reserved. 심리학 기반 연애 솔루션
+    </footer>
+
     <script>
         const cardNames = ["바보","마법사","여교황","여황제","황제","교황","연인","전차","힘","은둔자","운명의 수레바퀴","정의","매달린 사람","죽음","절제","악마","탑","별","달","태양","심판","세계"];
-        
         const loveMessages = [
-      "상대방은 당신을 아직도 깊이 생각하고 있지만, 자존심과 두려움 때문에 먼저 다가오지 못하고 있어요. 지금은 당신이 조금 물러서서 기다리는 것이 효과적입니다.",
+   "상대방은 당신을 아직도 깊이 생각하고 있지만, 자존심과 두려움 때문에 먼저 다가오지 못하고 있어요. 지금은 당신이 조금 물러서서 기다리는 것이 효과적입니다.",
             "현재 관계는 작은 변화만으로도 충분히 회복될 수 있는 단계예요. 연락을 멈추고 자신을 가꾸며 희소성 원리를 자연스럽게 적용해보세요.",
             "상대는 당신과의 좋은 추억을 자주 떠올리며 후회하고 있습니다. 하지만 자존심 때문에 솔직한 마음을 표현하지 못하고 있어요.",
             "지금은 연락을 줄이고 자신만의 시간을 갖는 것이 중요합니다. 당신이 더 빛나고 당당해질수록 상대가 다시 끌리게 될 거예요.",
@@ -226,27 +209,22 @@
             "관계가 다시 피어나려면, 당신의 에너지를 자신에게 돌리는 것이 가장 좋습니다.",
             "곧 상대가 당신의 가치를 다시 깨닫고 연락이 올 가능성이 큽니다.",
             "당신이 빛나는 모습을 보면 상대는 자연스럽게 돌아오게 되어 있어요."
-       
         ];
-
         const totalSummaries = [
-            "주도권이 당신에게 넘어오는 흐름입니다. 지금의 침묵은 독이 아니라 약입니다. 상대가 빈자리를 느끼게 하세요.",
-            "과거의 헌신이 가치 하락을 불렀으나, 반전의 카드가 떴습니다. '간헐적 강화'를 쓰기에 최적의 타이밍입니다.",
-            "상대는 감정의 소용돌이 속에 있습니다. 먼저 손 내밀지 말고 여유를 유지하세요. 승리는 견디는 자의 것입니다."
+            "주도권이 당신에게 넘어오고 있습니다. 지금의 침묵은 독이 아니라 약입니다. 상대가 빈자리를 느끼게 하세요.",
+            "과거의 헌신이 가치 하락을 불렀으나 반전의 카드가 떴습니다. '간헐적 강화'를 쓰기에 최적의 타이밍입니다."
         ];
 
         function drawCards() {
             const container = document.getElementById('cards');
             const interpDiv = document.getElementById('interpretation');
             
-            // 1. 중복 방지 로직 (Shuffle 알고리즘)
             let cardIndices = Array.from({length: 22}, (_, i) => i + 1);
             for (let i = cardIndices.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [cardIndices[i], cardIndices[j]] = [cardIndices[j], cardIndices[i]];
             }
-            
-            const selectedCards = cardIndices.slice(0, 3); // 섞인 배열에서 앞의 3장 선택
+            const selectedCards = cardIndices.slice(0, 3);
 
             container.innerHTML = '';
             interpDiv.innerHTML = '';
@@ -260,7 +238,7 @@
                 const msg = loveMessages[Math.floor(Math.random() * loveMessages.length)];
                 drawnMessages.push(msg);
 
-                const cardHTML = `
+                container.innerHTML += `
                     <div class="card" id="card${i}">
                         <div class="card-inner">
                             <div class="card-back"></div>
@@ -269,17 +247,11 @@
                                 <div class="card-name">${name}</div>
                             </div>
                         </div>
-                    </div>
-                `;
-                container.innerHTML += cardHTML;
-
-                setTimeout(() => {
-                    document.getElementById(`card${i}`).classList.add('flipped');
-                }, 200 + i * 200);
+                    </div>`;
+                setTimeout(() => document.getElementById(`card${i}`).classList.add('flipped'), 150 + i * 150);
             });
 
-            // 해석 및 총운 생성
-            let html = `<h2 style="font-size:1.4rem; color:#ffccff; text-align:center;">🔮 카드 분석 결과</h2>`;
+            let html = `<h2 style="font-size:1.3rem; color:#00FFCC; text-align:center; margin-bottom:15px;">🔮 카드 분석 결과</h2>`;
             for (let i = 0; i < 3; i++) {
                 html += `<div class="position">${positions[i]}</div><div class="message">${drawnMessages[i]}</div>`;
             }
@@ -289,22 +261,19 @@
                 <div class="total-fortune">
                     <div class="total-title">🌟 마음코드 종합 솔루션</div>
                     <div class="message" style="text-align:center; font-weight:bold; color:#fff;">${summary}</div>
-                    <div style="text-align:center; margin-top:15px;">
-                        <a href="https://www.youtube.com/@mindcode_k" target="_blank" style="color:#ffccff; text-decoration:none; font-size:0.8rem;">
-                            연애 주도권 되찾는 구체적 전략 보기 ▶
-                        </a>
-                    </div>
+                    <a href="https://www.youtube.com/@mindcode_k" target="_blank" class="final-cta">
+                        주도권 되찾는 구체적 전략 보기 ▶
+                    </a>
                 </div>`;
             interpDiv.innerHTML = html;
+
+            // 결과 화면으로 자동 스크롤
+            setTimeout(() => interpDiv.scrollIntoView({ behavior: 'smooth' }), 800);
         }
 
-        // 초기 화면 세팅
         window.onload = () => {
             const container = document.getElementById('cards');
-            container.innerHTML = '';
-            for (let i = 0; i < 3; i++) {
-                container.innerHTML += `<div class="card"><div class="card-inner"><div class="card-back"></div></div></div>`;
-            }
+            for (let i = 0; i < 3; i++) container.innerHTML += `<div class="card"><div class="card-inner"><div class="card-back"></div></div></div>`;
         };
     </script>
 </body>
@@ -312,28 +281,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+   
+       
+    
