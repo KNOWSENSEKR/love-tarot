@@ -12,10 +12,10 @@
             background: linear-gradient(135deg, #1a0f2e, #2a1b4a, #3a1f4f);
         }
         .tarot-card {
-            height: 340px;
-            border-radius: 20px;
+            height: 360px;
+            border-radius: 22px;
             overflow: hidden;
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.65);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7);
             position: relative;
             cursor: pointer;
             transition: transform 0.6s ease;
@@ -33,13 +33,19 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 20px;
+            border-radius: 22px;
         }
         .card-front {
             transform: rotateY(180deg);
         }
         .card-back {
-            background: url('https://knowsensekr.github.io/love/back.png') center/cover no-repeat;
+            background: #0f172a url('https://knowsensekr.github.io/love-tarot/back.png') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: #6b21a8;
+            opacity: 0.95;
         }
     </style>
 </head>
@@ -92,7 +98,7 @@
     </div>
 
     <script>
-        const baseUrl = "https://knowsensekr.github.io/love/";
+        const baseUrl = "https://knowsensekr.github.io/love-tarot/";
 
         const deck = [
             { num: 1,  name: "바보",       desc: "새로운 시작과 순수한 마음" },
@@ -186,7 +192,7 @@
             const c2 = shuffled[1];
             const c3 = shuffled[2];
 
-            // 카드 초기화 (뒷면으로)
+            // 카드 초기화 (뒷면으로 시작)
             document.getElementById('card1').innerHTML = `
                 <div class="card-inner" style="transform: rotateY(0deg);">
                     <div class="card-back absolute inset-0"></div>
@@ -246,7 +252,7 @@
             document.getElementById('result').classList.remove('hidden');
         }
 
-        // 처음 로드 시에는 뒷면만 보이게
+        // 처음 로드 시 뒷면만 보이게
         window.onload = () => {};
     </script>
 </body>
