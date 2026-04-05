@@ -1,31 +1,52 @@
-<script>
-        // 타로 카드 이름 (이 부분은 가벼우므로 유지)
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마음코드 연애심리 타로 v1.5 - 지브리 에디션</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+        body{font-family:'Noto Sans KR',sans-serif;background-image:url('https://knowsensekr.github.io/love-tarot/bg.png');background-size:cover;background-position:center;background-attachment:fixed;color:#fff;text-align:center;margin:0;padding:10px;min-height:100vh;word-break:keep-all}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(13,0,26,0.7);z-index:-1}h1{font-size:1.6rem;color:#fff;margin:25px 0 15px;text-shadow:0 0 10px rgba(255,255,255,0.2);position:relative}.brand-point{color:#00FFCC;text-shadow:0 0 15px rgba(0,255,204,0.8);font-weight:900}.sub-btn{display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(to right,#FF0000,#CC0000);color:white;padding:10px 22px;font-size:0.9rem;font-weight:700;border-radius:6px;text-decoration:none;margin-bottom:25px;box-shadow:0 4px 15px rgba(255,0,0,0.3);transition:0.3s;position:relative}.sub-btn::before{content:'▶';font-size:0.7rem;margin-right:8px;background:white;color:#FF0000;width:18px;height:18px;display:flex;align-items:center;justify-content:center;border-radius:4px}.sub-btn:hover{transform:scale(1.05);box-shadow:0 6px 20px rgba(255,0,0,0.5)}.description{font-size:.95rem;margin-bottom:25px;color:#ffddff;opacity:.8;position:relative}button#draw-btn{background:linear-gradient(45deg,#ff3399,#ff66cc);color:white;border:none;padding:15px 35px;font-size:1.1rem;font-weight:700;border-radius:50px;cursor:pointer;box-shadow:0 8px 20px rgba(255,51,153,0.5);transition:0.3s;position:relative}.cards{display:flex;justify-content:center;gap:8px;margin:30px 0;position:relative}.card{width:31%;max-width:130px;aspect-ratio:2/3;perspective:1000px}.card-inner{position:relative;width:100%;height:100%;transition:transform .8s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d;border-radius:8px}.card.flipped .card-inner{transform:rotateY(180deg)}.card-front,.card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:8px;overflow:hidden}.card-back{background:#3a0066 url('back.png') center/cover no-repeat;border:1.5px solid #ff66cc}.card-front{background:#1a0033;transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center}.card-front img{width:100%;height:75%;object-fit:cover}.card-name{font-size:.85rem;font-weight:900;color:#ffccff;margin-top:5px}.interpretation{max-width:550px;margin:30px auto;background:rgba(0,0,0,0.6);border-radius:15px;padding:20px;text-align:left;display:none;border:1px solid rgba(255,255,255,0.1);position:relative}.position{font-size:1.05rem;color:#00FFCC;margin:18px 0 5px;font-weight:700;border-left:3px solid #ff3399;padding-left:8px}.message{font-size:.9rem;line-height:1.7;color:#eee}.total-fortune{margin-top:30px;padding:22px;background:linear-gradient(135deg,rgba(255,51,153,0.3),rgba(0,255,204,0.1));border:1.5px solid #ff3399;border-radius:12px;text-align:center}.total-title{font-size:1.3rem;color:#fff;margin-bottom:12px;text-shadow:0 0 10px #ff3399;font-weight:900}.final-cta{display:inline-block;margin-top:15px;font-size:1.1rem;font-weight:900;color:#FFD700;text-decoration:none;padding:12px 24px;border:2px solid #FFD700;border-radius:8px;background:rgba(0,0,0,0.5);transition:0.3s;animation:pulse-gold 2s infinite}@keyframes pulse-gold{0%{transform:scale(1);box-shadow:0 0 5px #FFD700}50%{transform:scale(1.03);box-shadow:0 0 20px rgba(255,215,0,0.6)}100%{transform:scale(1);box-shadow:0 0 5px #FFD700}}footer{margin-top:50px;padding-bottom:20px;font-size:.75rem;color:rgba(255,255,255,0.4);position:relative}
+    </style>
+</head>
+<body>
+    <h1>🔮 <span class="brand-point">마음코드</span> 연애심리 타로 v1.5</h1>
+    <a href="https://www.youtube.com/@mindcode_k" target="_blank" class="sub-btn">마음코드 구독하기</a>
+    
+    <div class="description">마음을 가다듬고 버튼을 눌러주세요</div>
+    <button id="draw-btn" onclick="_0x8c4b()">운명의 카드 3장 뽑기</button>
+
+    <div class="cards" id="cards"></div>
+    <div id="interpretation" class="interpretation"></div>
+
+    <footer>
+        © 2026 마음코드. All rights reserved. 심리학 기반 연애 솔루션
+    </footer>
+
+    <script>
         const _0x1a2c=["바보","마법사","여교황","여황제","황제","교황","연인","전차","힘","은둔자","운명의 수레바퀴","정의","매달린 사람","죽음","절제","악마","탑","별","달","태양","심판","세계"];
-        
-        // 외부 데이타를 담을 빈 저장소
         let tarotData = null;
 
-        // 페이지가 열릴 때 data.json 파일을 비동기(Fetch API)로 불러옵니다.
         window.onload = async () => {
             const _0xcon = document.getElementById('cards');
             for(let i=0;i<3;i++) _0xcon.innerHTML+=`<div class="card"><div class="card-inner"><div class="card-back"></div></div></div>`;
 
             try {
-                // data.json 가져오기
+                // GitHub 저장소와 동일한 위치에 있는 data.json을 불러옵니다.
                 const response = await fetch('data.json');
+                if (!response.ok) throw new Error("네트워크 응답이 정상이 아닙니다.");
                 tarotData = await response.json();
                 console.log("텍스트 데이타 로드 완료");
             } catch (error) {
                 console.error("데이터 로드 에러:", error);
-                alert("텍스트 데이타를 불러오지 못했습니다. 파일 경로를 확인해주세요.");
+                // 로컬에서 실행하여 발생하는 에러 안내를 명확히 추가했습니다.
+                console.warn("로컬 PC에서 더블클릭으로 실행하면 브라우저 보안 정책상 data.json을 불러올 수 없습니다. GitHub에 업로드 후 확인해 주세요.");
             }
         };
 
-        // 핵심 실행 함수
         function _0x8c4b(){
-            // 데이터가 아직 불러와지지 않았을 때의 예외 처리
             if (!tarotData) {
-                alert("데이터를 준비 중입니다. 잠시 후 다시 버튼을 눌러주세요.");
+                alert("타로 데이타를 아직 불러오지 못했습니다. 로컬 환경이 아닌 GitHub에 업로드 후 실행해 주세요.");
                 return;
             }
 
@@ -42,7 +63,6 @@
             }
             const _0xsel=_0xarr.slice(0,3);
 
-            // 불러온 외부 JSON 데이터(tarotData)에서 랜덤 추출
             const _0xsp=[
                 tarotData.past[Math.floor(Math.random()*tarotData.past.length)],
                 tarotData.present[Math.floor(Math.random()*tarotData.present.length)],
@@ -66,7 +86,6 @@
                 _0xhtm+=`<div class="position">${_0xtit[i]}</div><div class="message">${_0xsp[i]}</div>`;
             }
 
-            // 불러온 데이터에서 총운 데이타 랜덤 추출
             const _0xsum=tarotData.total[Math.floor(Math.random()*tarotData.total.length)]; 
             
             _0xhtm+=`<div class="total-fortune"><div class="total-title">🌟 마음코드 종합 솔루션</div><div class="message" style="text-align:center;font-weight:bold;color:#fff;">${_0xsum}</div><a href="https://youtu.be/VsDF_ptjM4E" target="_blank" class="final-cta">주도권 되찾는 구체적 전략 보기 ▶</a></div>`;
@@ -75,3 +94,5 @@
             setTimeout(()=>_0xd2.scrollIntoView({behavior:'smooth'}),800);
         }
     </script>
+</body>
+</html>
