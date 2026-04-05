@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>마음코드 연애심리 타로 v1.5 - 지브리 에디션</title>
+    <title>마음코드 연애심리 타로 v1.51 - 지브리 에디션</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
         body{font-family:'Noto Sans KR',sans-serif;background-image:url('https://knowsensekr.github.io/love-tarot/bg.png');background-size:cover;background-position:center;background-attachment:fixed;color:#fff;text-align:center;margin:0;padding:10px;min-height:100vh;word-break:keep-all}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(13,0,26,0.7);z-index:-1}h1{font-size:1.6rem;color:#fff;margin:25px 0 15px;text-shadow:0 0 10px rgba(255,255,255,0.2);position:relative}.brand-point{color:#00FFCC;text-shadow:0 0 15px rgba(0,255,204,0.8);font-weight:900}.sub-btn{display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(to right,#FF0000,#CC0000);color:white;padding:10px 22px;font-size:0.9rem;font-weight:700;border-radius:6px;text-decoration:none;margin-bottom:25px;box-shadow:0 4px 15px rgba(255,0,0,0.3);transition:0.3s;position:relative}.sub-btn::before{content:'▶';font-size:0.7rem;margin-right:8px;background:white;color:#FF0000;width:18px;height:18px;display:flex;align-items:center;justify-content:center;border-radius:4px}.sub-btn:hover{transform:scale(1.05);box-shadow:0 6px 20px rgba(255,0,0,0.5)}.description{font-size:.95rem;margin-bottom:25px;color:#ffddff;opacity:.8;position:relative}button#draw-btn{background:linear-gradient(45deg,#ff3399,#ff66cc);color:white;border:none;padding:15px 35px;font-size:1.1rem;font-weight:700;border-radius:50px;cursor:pointer;box-shadow:0 8px 20px rgba(255,51,153,0.5);transition:0.3s;position:relative}.cards{display:flex;justify-content:center;gap:8px;margin:30px 0;position:relative}.card{width:31%;max-width:130px;aspect-ratio:2/3;perspective:1000px}.card-inner{position:relative;width:100%;height:100%;transition:transform .8s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d;border-radius:8px}.card.flipped .card-inner{transform:rotateY(180deg)}.card-front,.card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:8px;overflow:hidden}.card-back{background:#3a0066 url('back.png') center/cover no-repeat;border:1.5px solid #ff66cc}.card-front{background:#1a0033;transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center}.card-front img{width:100%;height:75%;object-fit:cover}.card-name{font-size:.85rem;font-weight:900;color:#ffccff;margin-top:5px}.interpretation{max-width:550px;margin:30px auto;background:rgba(0,0,0,0.6);border-radius:15px;padding:20px;text-align:left;display:none;border:1px solid rgba(255,255,255,0.1);position:relative}.position{font-size:1.05rem;color:#00FFCC;margin:18px 0 5px;font-weight:700;border-left:3px solid #ff3399;padding-left:8px}.message{font-size:.9rem;line-height:1.7;color:#eee}.total-fortune{margin-top:30px;padding:22px;background:linear-gradient(135deg,rgba(255,51,153,0.3),rgba(0,255,204,0.1));border:1.5px solid #ff3399;border-radius:12px;text-align:center}.total-title{font-size:1.3rem;color:#fff;margin-bottom:12px;text-shadow:0 0 10px #ff3399;font-weight:900}.final-cta{display:inline-block;margin-top:15px;font-size:1.1rem;font-weight:900;color:#FFD700;text-decoration:none;padding:12px 24px;border:2px solid #FFD700;border-radius:8px;background:rgba(0,0,0,0.5);transition:0.3s;animation:pulse-gold 2s infinite}@keyframes pulse-gold{0%{transform:scale(1);box-shadow:0 0 5px #FFD700}50%{transform:scale(1.03);box-shadow:0 0 20px rgba(255,215,0,0.6)}100%{transform:scale(1);box-shadow:0 0 5px #FFD700}}footer{margin-top:50px;padding-bottom:20px;font-size:.75rem;color:rgba(255,255,255,0.4);position:relative}
     </style>
 </head>
 <body>
-    <h1>🔮 <span class="brand-point">마음코드</span> 연애심리 타로 v1.52</h1>
+    <h1>🔮 <span class="brand-point">마음코드</span> 연애심리 타로 v1.6</h1>
     <a href="https://www.youtube.com/@mindcode_k" target="_blank" class="sub-btn">마음코드 구독하기</a>
     
     <div class="description">마음을 가다듬고 버튼을 눌러주세요</div>
@@ -25,74 +25,110 @@
 
     <script>
         const _0x1a2c=["바보","마법사","여교황","여황제","황제","교황","연인","전차","힘","은둔자","운명의 수레바퀴","정의","매달린 사람","죽음","절제","악마","탑","별","달","태양","심판","세계"];
-        let tarotData = null;
 
-        window.onload = async () => {
-            const _0xcon = document.getElementById('cards');
-            for(let i=0;i<3;i++) _0xcon.innerHTML+=`<div class="card"><div class="card-inner"><div class="card-back"></div></div></div>`;
+        async function _0x8c4b() {
+            const _0xd1 = document.getElementById('cards');
+            const _0xd2 = document.getElementById('interpretation');
+            const _0xd3 = document.getElementById('draw-btn');
+            
+            _0xd3.innerText = '카드 다시 뽑기';
+            // 통신 중 로딩 텍스트 표시
+            _0xd1.innerHTML = '<div style="color:white; margin: 20px; font-weight:700;">우주의 기운을 모아 카드를 섞고 있습니다...</div>';
+            _0xd2.style.display = 'none';
+
+            // 🛡️ 비상용 데이타 (네트워크 오류 대비)
+            const backupData = {
+                past: [
+                    "과거의 작은 오해가 관계의 흐름을 조금씩 바꾸어 놓았습니다.",
+                    "서로를 향한 진심이 때로는 서툰 표현으로 엇갈렸던 시기입니다.",
+                    "곁에 있다는 익숙함이 잠시 소중함을 잊게 만들었던 과거입니다.",
+                    "감정의 주도권을 내어주며 스스로를 잃어갔던 시간들이 보입니다.",
+                    "좋았던 기억만큼이나 서로에게 주었던 상처도 뚜렷하게 남아있습니다."
+                ],
+                present: [
+                    "현재 상황에 대한 불안과 기대가 교차하며 내적 갈등을 겪고 있습니다.",
+                    "겉으로는 평온해 보이지만 마음속 깊은 곳에서는 끊임없이 고민하고 있습니다.",
+                    "익숙했던 패턴에서 벗어나 낯선 감정과 마주하며 혼란스러워하는 중입니다.",
+                    "먼저 다가갈 용기가 부족하여 제자리에서 망설이고 있는 상태입니다.",
+                    "마음 한구석에 남은 미련과 자존심이 팽팽하게 맞서고 있습니다."
+                ],
+                future: [
+                    "스스로의 삶에 집중할 때, 오히려 관계의 흐름이 긍정적으로 변화할 것입니다.",
+                    "예상치 못한 타이밍에 막혀있던 소통의 창구가 다시 열리게 됩니다.",
+                    "감정의 폭풍이 지나가고 한층 성숙하고 평온한 단계에 접어들 것입니다.",
+                    "과거의 낡은 패턴을 버리고 새로운 방식으로 관계를 재정립하게 됩니다.",
+                    "조급함을 내려놓은 여유로운 태도가 결국 원하는 결과를 끌어당길 것입니다."
+                ],
+                total: [
+                    "지금은 외부의 상황을 통제하려 애쓰기보다, 고요히 내면의 평화를 유지하는 것이 가장 현명한 해결책입니다.",
+                    "거창한 행동이나 말보다는 묵묵히 자신의 자리를 지키는 태도가 상대방에게 더 큰 울림과 긴장감을 줍니다.",
+                    "일시적인 감정에 휘둘리지 말고, 길게 바라보는 안목으로 스스로의 가치를 높이는 데 에너지를 집중해야 합니다.",
+                    "억지로 끊어내거나 이어가려 하지 말고, 자연스러운 흐름에 몸을 맡길 때 가장 좋은 해답을 찾을 수 있습니다.",
+                    "누군가의 선택을 기다리는 수동적인 입장에서 벗어나, 삶의 주인공으로서 당당히 주도권을 쥐어보길 바랍니다."
+                ]
+            };
+
+            let resultData;
 
             try {
-                // GitHub 저장소와 동일한 위치에 있는 data.json을 불러옵니다.
-                const response = await fetch('data.json');
-                if (!response.ok) throw new Error("네트워크 응답이 정상이 아닙니다.");
-                tarotData = await response.json();
-                console.log("텍스트 데이타 로드 완료");
+                // 🛡️ API 통신 (3.5초 응답 대기 타임아웃 설정)
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 3500);
+
+                const response = await fetch('https://tarot-api.bloghunter77.workers.dev/', { signal: controller.signal });
+                clearTimeout(timeoutId);
+
+                if (!response.ok) throw new Error('서버 통신 에러');
+                resultData = await response.json();
+
             } catch (error) {
-                console.error("데이터 로드 에러:", error);
-                // 로컬에서 실행하여 발생하는 에러 안내를 명확히 추가했습니다.
-                console.warn("로컬 PC에서 더블클릭으로 실행하면 브라우저 보안 정책상 data.json을 불러올 수 없습니다. GitHub에 업로드 후 확인해 주세요.");
-            }
-        };
-
-        function _0x8c4b(){
-            if (!tarotData) {
-                alert("타로 데이타를 아직 불러오지 못했습니다. 로컬 환경이 아닌 GitHub에 업로드 후 실행해 주세요.");
-                return;
+                // 🛡️ 통신 실패 시 비상용 데이타 가동
+                console.warn("네트워크 지연. 비상용 데이타를 가동합니다.");
+                resultData = {
+                    past: backupData.past[Math.floor(Math.random() * backupData.past.length)],
+                    present: backupData.present[Math.floor(Math.random() * backupData.present.length)],
+                    future: backupData.future[Math.floor(Math.random() * backupData.future.length)],
+                    total: backupData.total[Math.floor(Math.random() * backupData.total.length)]
+                };
             }
 
-            const _0xd1=document.getElementById('cards');
-            const _0xd2=document.getElementById('interpretation');
-            const _0xd3=document.getElementById('draw-btn');
-            
-            _0xd3.innerText='카드 다시 뽑기';
-
-            let _0xarr=Array.from({length:22},(_,i)=>i+1);
-            for(let i=_0xarr.length-1;i>0;i--){
-                const j=Math.floor(Math.random()*(i+1));
-                [_0xarr[i],_0xarr[j]]=[_0xarr[j],_0xarr[i]];
+            // 카드 섞기
+            let _0xarr = Array.from({length: 22}, (_, i) => i + 1);
+            for (let i = _0xarr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [_0xarr[i], _0xarr[j]] = [_0xarr[j], _0xarr[i]];
             }
-            const _0xsel=_0xarr.slice(0,3);
+            const _0xsel = _0xarr.slice(0, 3);
 
-            const _0xsp=[
-                tarotData.past[Math.floor(Math.random()*tarotData.past.length)],
-                tarotData.present[Math.floor(Math.random()*tarotData.present.length)],
-                tarotData.future[Math.floor(Math.random()*tarotData.future.length)]
-            ];
-
-            _0xd1.innerHTML='';
-            _0xd2.innerHTML='';
-            _0xd2.style.display='block';
-
-            const _0xtit=['[과거] 연애 흐름','[현재] 상대방 속마음','[미래] 관계 변화'];
-
-            _0xsel.forEach((n,i)=>{
-                const nm=_0x1a2c[n-1];
-                _0xd1.innerHTML+=`<div class="card" id="cr_${i}"><div class="card-inner"><div class="card-back"></div><div class="card-front"><img src="${n}.png" alt="${nm}" onerror="this.src='https://via.placeholder.com/150x225/1a0033/ffccff?text=${nm}'"><div class="card-name">${nm}</div></div></div></div>`;
-                setTimeout(()=>document.getElementById(`cr_${i}`).classList.add('flipped'),150+i*150);
+            // 화면 그리기
+            _0xd1.innerHTML = '';
+            _0xsel.forEach((n, i) => {
+                const nm = _0x1a2c[n - 1];
+                _0xd1.innerHTML += `<div class="card" id="cr_${i}"><div class="card-inner"><div class="card-back"></div><div class="card-front"><img src="${n}.png" alt="${nm}" onerror="this.src='https://via.placeholder.com/150x225/1a0033/ffccff?text=${nm}'"><div class="card-name">${nm}</div></div></div></div>`;
+                setTimeout(() => document.getElementById(`cr_${i}`).classList.add('flipped'), 150 + i * 150);
             });
 
-            let _0xhtm=`<h2 style="font-size:1.3rem;color:#00FFCC;text-align:center;margin-bottom:15px;">🔮 카드 분석 결과</h2>`;
-            for(let i=0;i<3;i++){
-                _0xhtm+=`<div class="position">${_0xtit[i]}</div><div class="message">${_0xsp[i]}</div>`;
+            // 결과 매핑
+            const _0xtit = ['[과거] 연애 흐름','[현재] 상대방 속마음','[미래] 관계 변화'];
+            const _0xsp = [resultData.past, resultData.present, resultData.future];
+
+            let _0xhtm = `<h2 style="font-size:1.3rem;color:#00FFCC;text-align:center;margin-bottom:15px;">🔮 카드 분석 결과</h2>`;
+            for(let i=0; i<3; i++){
+                _0xhtm += `<div class="position">${_0xtit[i]}</div><div class="message">${_0xsp[i]}</div>`;
             }
 
-            const _0xsum=tarotData.total[Math.floor(Math.random()*tarotData.total.length)]; 
+            _0xhtm += `<div class="total-fortune"><div class="total-title">🌟 마음코드 종합 솔루션</div><div class="message" style="text-align:center;font-weight:bold;color:#fff;">${resultData.total}</div><a href="https://youtu.be/VsDF_ptjM4E" target="_blank" class="final-cta">주도권 되찾는 구체적 전략 보기 ▶</a></div>`;
             
-            _0xhtm+=`<div class="total-fortune"><div class="total-title">🌟 마음코드 종합 솔루션</div><div class="message" style="text-align:center;font-weight:bold;color:#fff;">${_0xsum}</div><a href="https://youtu.be/VsDF_ptjM4E" target="_blank" class="final-cta">주도권 되찾는 구체적 전략 보기 ▶</a></div>`;
-            _0xd2.innerHTML=_0xhtm;
+            _0xd2.innerHTML = _0xhtm;
+            _0xd2.style.display = 'block';
 
-            setTimeout(()=>_0xd2.scrollIntoView({behavior:'smooth'}),800);
+            setTimeout(() => _0xd2.scrollIntoView({behavior: 'smooth'}), 800);
         }
+
+        window.onload = () => {
+            const _0xcon = document.getElementById('cards');
+            for(let i=0;i<3;i++) _0xcon.innerHTML+=`<div class="card"><div class="card-inner"><div class="card-back"></div></div></div>`;
+        };
     </script>
 </body>
 </html>
